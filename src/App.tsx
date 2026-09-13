@@ -168,7 +168,9 @@ export default function App() {
           </div>
         </header>
 
-        <div className="content">
+        {/* Keyed on the view so React remounts this region and the entrance animation
+            reruns. Without the key the node persists and the new view simply appears. */}
+        <div className="content" key={view}>
           {view === 'overview' && <Overview onOpenPartner={setOpenPartner} onGo={go} />}
           {view === 'sponsors' && (
             <Sponsors

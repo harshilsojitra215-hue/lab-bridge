@@ -93,14 +93,79 @@ button {
 }
 *::-webkit-scrollbar-thumb:hover { background: var(--p300); }
 
-/* Everything here is a response to a click and short enough not to be in the way, but a reader
-   who has asked their system to stop moving things has asked for a reason. */
+/* ═══════════════════════════════════════════════════════════════ motion
+
+   Rules, because motion is where a tool most easily stops looking like one.
+
+   Only transform and opacity are animated. Both are handled by the compositor, so nothing
+   here can cause a reflow while sixty-five rows and seven hundred and eighty cells are on
+   screen. Nothing animates width, height, top or left, and `transition: all` appears nowhere.
+
+   Nothing is triggered by scroll position. Scroll choreography belongs to pages that are
+   being read like a film; this is a grid someone is scanning for a company name, and content
+   that arrives as you reach it is content you cannot search. Everything below fires once, on
+   entering a view, and is over inside a quarter of a second. */
+
+.content { animation: view-in 190ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The six openings on the overview land in sequence. The stagger is small enough to read as
+   one movement with a direction rather than six separate arrivals. */
+.row.enter {
+  animation: row-in 240ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 32ms + 60ms);
+}
+
+@keyframes row-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Marks land column by column, left to right, so the first thing the grid does is show that
+   it is read across a row. Delay is keyed to the column only: keying it to the row as well
+   would run for two seconds on sixty-five of them. */
+.cell .mark {
+  animation: mark-in 220ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(var(--col, 0) * 16ms + 80ms);
+}
+
+@keyframes mark-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* The authored still state. Not "animations off": every element is placed exactly where the
+   motion would have left it, at full opacity, with no delay inherited from the stagger. A
+   reader who has asked their system to stop moving things loses nothing but the movement. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  /* These four begin invisible, so the animation has to be removed rather than shortened.
+     Collapsing a duration to 0.01ms leaves the animation running and still winning the
+     cascade, which pins the element to its from-state: opacity 0, marks at scale 0.4, an
+     entirely blank grid for anyone who asked for less motion. `animation: none` hands control
+     back to these declarations. */
+  .content,
+  .row.enter {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .cell .mark {
+    animation: none !important;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  .drawer, .scrim { animation: none !important; opacity: 1; transform: none; }
 }
 
 h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-spacing: -0.011em; }

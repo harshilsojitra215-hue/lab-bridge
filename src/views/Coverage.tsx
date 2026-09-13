@@ -68,14 +68,14 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
                     </span>
                   </button>
                 </th>
-                {labs.map((l) => {
+                {labs.map((l, col) => {
                   const f = fitFor(p.id, l.id)
                   const signed = reviewState(f).reviewed
                   return (
                     <td
                       key={l.id}
                       className={`cell c-${f.status}`}
-                      style={{ ['--lab' as string]: l.color }}
+                      style={{ ['--lab' as string]: l.color, ['--col' as string]: col }}
                       tabIndex={f.status === 'no_fit' ? -1 : 0}
                       aria-label={`${p.name}, ${l.name}: ${statusLabel[f.status]}${f.reasoning ? '. ' + f.reasoning : ''}`}
                       onMouseEnter={(e) =>

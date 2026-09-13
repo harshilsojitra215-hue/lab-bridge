@@ -1,3 +1,4 @@
+import CountUp from '../components/CountUp'
 import { totals } from '../derive'
 
 /**
@@ -30,17 +31,17 @@ export default function Method() {
 
       <div className="kpis">
         <div className="kpi">
-          <span className="kpi-value">{totals.assessed}</span>
+          <span className="kpi-value"><CountUp value={totals.assessed} /></span>
           <span className="kpi-label">Assessments kept</span>
           <span className="kpi-note">of {totals.scored} pairs considered</span>
         </div>
         <div className="kpi">
-          <span className="kpi-value">{totals.scored - totals.assessed}</span>
+          <span className="kpi-value"><CountUp value={totals.scored - totals.assessed} /></span>
           <span className="kpi-label">Judged no fit</span>
           <span className="kpi-note">Discarding is the work</span>
         </div>
         <div className="kpi warn">
-          <span className="kpi-value">{totals.reviewed}</span>
+          <span className="kpi-value"><CountUp value={totals.reviewed} /></span>
           <span className="kpi-label">Signed off by a person</span>
           <span className="kpi-note">Everything else is model output</span>
         </div>

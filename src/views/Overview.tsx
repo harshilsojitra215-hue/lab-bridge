@@ -1,3 +1,4 @@
+import CountUp from '../components/CountUp'
 import { labById } from '../data/labs'
 import { labCoverage, monogram, opportunities, totals } from '../derive'
 import type { ViewId } from '../App'
@@ -87,9 +88,10 @@ export default function Overview({
           </button>
         </div>
         <div className="rows compact">
-          {top.map((o) => (
+          {top.map((o, i) => (
             <button
-              className="row overview"
+              className="row overview enter"
+              style={{ ['--i' as string]: i }}
               key={`${o.partner.id}-${o.fit.labId}`}
               onClick={() => onOpenPartner(o.partner.id)}
             >
@@ -171,7 +173,9 @@ function Kpi({
 }) {
   return (
     <div className={'kpi' + (accent ? ' accent' : '') + (warn ? ' warn' : '')}>
-      <span className="kpi-value">{value}</span>
+      <span className="kpi-value">
+        <CountUp value={value} />
+      </span>
       <span className="kpi-label">{label}</span>
       <span className="kpi-note">{note}</span>
     </div>
