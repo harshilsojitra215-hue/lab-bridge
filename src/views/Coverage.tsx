@@ -32,33 +32,14 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
         the reasoning; select a row for the full record.
       </p>
 
-      <div className="cov-tools">
-        <div className="legend">
-          <span className="legend-item">
-            <span className="sw solid" /> Existing
-          </span>
-          <span className="legend-item">
-            <span className="sw hollow" /> Strong candidate
-          </span>
-          <span className="legend-item">
-            <span className="sw faint" /> Possible
-          </span>
-          <span className="legend-item">
-            <span className="sw dotted" /> Not signed off
-          </span>
-          <span className="legend-note">Each mark is drawn in its own lab colour</span>
-        </div>
-        <div className="filter-group">
-          <button className="chip" aria-pressed={!onlyOpportunities} onClick={() => setOnlyOpportunities(false)}>
-            All {partnersRanked.length}
-          </button>
-          <button className="chip" aria-pressed={onlyOpportunities} onClick={() => setOnlyOpportunities(true)}>
-            With opportunity
-          </button>
-        </div>
-      </div>
-
-      <div className="matrix-wrap">
+      {/*
+        The grid is twelve columns wide and sixty-five rows tall — a narrow, tall object that
+        looks wrong stretched across a full-width container and looks abandoned sitting beside
+        an empty one. The controls and the key live in the space to its right instead, which is
+        also where a reader looks when a mark needs explaining.
+      */}
+      <div className="coverage-layout">
+        <div className="matrix-wrap">
         <table className="matrix">
           <thead>
             <tr>
@@ -119,8 +100,56 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
                 })}
               </tr>
             ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+
+        <aside className="cov-side">
+          <div className="cov-side-block">
+            <span className="micro">Show</span>
+            <div className="filter-group">
+              <button
+                className="chip"
+                aria-pressed={!onlyOpportunities}
+                onClick={() => setOnlyOpportunities(false)}
+              >
+                All {partnersRanked.length}
+              </button>
+              <button
+                className="chip"
+                aria-pressed={onlyOpportunities}
+                onClick={() => setOnlyOpportunities(true)}
+              >
+                With opportunity
+              </button>
+            </div>
+            <p className="cov-side-note">
+              Showing <strong>{rows.length}</strong> of {partnersRanked.length} sponsors.
+            </p>
+          </div>
+
+          <div className="cov-side-block">
+            <span className="micro">Reading the grid</span>
+            <div className="legend">
+              <span className="legend-item">
+                <span className="sw solid" /> Relationship exists
+              </span>
+              <span className="legend-item">
+                <span className="sw hollow" /> Strong candidate
+              </span>
+              <span className="legend-item">
+                <span className="sw faint" /> Possible
+              </span>
+              <span className="legend-item">
+                <span className="sw dotted" /> Not signed off
+              </span>
+            </div>
+            <p className="cov-side-note">
+              Each mark is drawn in its own lab colour. The count beside a sponsor is
+              relationships · openings.
+            </p>
+          </div>
+        </aside>
       </div>
 
       {tip && <Tip tip={tip} />}

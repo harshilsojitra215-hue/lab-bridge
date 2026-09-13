@@ -21,7 +21,20 @@ export default function PartnerDrawer({ id, onClose }: { id: string; onClose: ()
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+
+    /* Hold the page still underneath. Scrolling the list behind an open record loses the row
+       the reader came from, and on a trackpad it happens by accident. The scrollbar is replaced
+       with padding of the same width so the layout does not jump as it disappears. */
+    const gap = window.innerWidth - document.documentElement.clientWidth
+    const { overflow, paddingRight } = document.body.style
+    document.body.style.overflow = 'hidden'
+    if (gap > 0) document.body.style.paddingRight = `${gap}px`
+
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = overflow
+      document.body.style.paddingRight = paddingRight
+    }
   }, [onClose])
 
   if (!partner) return null
