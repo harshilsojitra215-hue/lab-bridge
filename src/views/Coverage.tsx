@@ -27,13 +27,13 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
       <p className="lede">
         All {partnersRanked.length} sponsors against all twelve labs. Read across a row: a solid
         mark is a relationship that exists, the same mark hollow is a lab that should have one
-        and does not. That pattern — solid next to hollow — is the finding, and it is the whole
-        argument for looking at sponsors across labs rather than inside one. Hover any mark for
-        the reasoning; select a row for the full record.
+        and does not. Solid next to hollow is the finding, and the reason to read sponsors across
+        labs rather than inside one. Hover any mark for the reasoning. Select a row for the full
+        record.
       </p>
 
       {/*
-        The grid is twelve columns wide and sixty-five rows tall — a narrow, tall object that
+        The grid is twelve columns wide and sixty-five rows tall, a narrow and tall object that
         looks wrong stretched across a full-width container and looks abandoned sitting beside
         an empty one. The controls and the key live in the space to its right instead, which is
         also where a reader looks when a mark needs explaining.

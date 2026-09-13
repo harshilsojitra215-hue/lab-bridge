@@ -4,8 +4,8 @@ import type { Fit } from '../types'
  * Three honest states, not two.
  *
  * A person signing off is the only thing that counts as reviewed. The automated adversarial
- * check is a real gate — it caught fabricated claims and generic reasoning, and its findings
- * were applied — but it is another model reading model output, so it is labelled as what it
+ * check is a real gate, since it caught fabricated claims and generic reasoning and its
+ * findings were applied, but it is still another model reading model output, so it is what it
  * is and still carries the unreviewed dot.
  */
 export function reviewState(fit: Fit): { label: string; reviewed: boolean } {

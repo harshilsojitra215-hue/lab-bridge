@@ -332,7 +332,7 @@ export const partners: Partner[] = [
     whatTheyDo:
       'International law firm with a life sciences and health industry practice covering regulation, data and commercial contracts.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/healthcare/',
-    // The only occurrence on the page is the venue line of an event tile — the firm's office
+    // The only occurrence on the page is the venue line of an event tile, the firm's office
     // address. That is a venue credit, which this collection excludes, so no association is
     // recorded. The lab fit below stands on the practice area alone.
     currentLabs: [],

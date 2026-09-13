@@ -33,14 +33,14 @@ export default function Overview({
       */}
       <section className="thesis">
         <p className="thesis-lede">
-          Twelve labs each develop their own sponsors. Sponsors are not domain specific — a
-          company one lab has already won is often a warm relationship for three others, and no
-          lab can see that from where it sits.
+          Twelve labs each develop their own sponsors. Sponsors are not domain specific. A company
+          one lab has already won is often a warm relationship for three others, and no lab can
+          see that from where it sits.
         </p>
         <p className="thesis-sub">
           Lab Bridge maps every publicly listed partner against all twelve labs and names the lab
-          that could make each introduction. It is built from their public pages only, which is a
-          real limit:{' '}
+          that could make each introduction. It is built only from their public pages, which
+          limits what it can claim.{' '}
           <button className="link inline" onClick={() => onGo('method')}>
             how it works, and what it cannot tell you
           </button>
@@ -68,7 +68,7 @@ export default function Overview({
         <Kpi
           value={totals.inferredAssociations}
           label="Unconfirmed associations"
-          note={`of ${totals.confirmedAssociations + totals.inferredAssociations} — read from page context, not a partner list`}
+          note={`of ${totals.confirmedAssociations + totals.inferredAssociations}, read from page context rather than a partner list`}
           warn
         />
       </div>
@@ -78,8 +78,8 @@ export default function Overview({
           <div className="panel-title">
             <h2>Priority introductions</h2>
             <span className="panel-sub">
-              The strongest opening per sponsor. Left tag is the lab that already holds the
-              relationship; right tag is the lab that could be introduced.
+              The strongest opening per sponsor. The left tag is the lab that already holds the
+              relationship. The right tag is the lab that could be introduced.
             </span>
           </div>
           <button className="link" onClick={() => onGo('crosslab')}>

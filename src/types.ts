@@ -31,8 +31,8 @@ export type PartnerType = 'corporate' | 'foundation' | 'public_body' | 'ecosyste
 export interface LabAssociation {
   labId: LabId
   /**
-   * confirmed — the partner appears in a named Partners / Sponsors section on that lab's page.
-   * inferred  — the partner appears on the page in some other context (event sponsor, venue,
+   * confirmed: the partner appears in a named Partners / Sponsors section on that lab's page.
+   * inferred:  the partner appears on the page in some other context (event sponsor, venue,
    *             programme mention) and the association is our read, not their statement.
    */
   confidence: 'confirmed' | 'inferred'
@@ -62,12 +62,12 @@ export interface Fit {
   reasoning: string
   evidence: string[]
   /**
-   * Has a PERSON read and signed off on this assessment. Nothing else sets this true —
+   * Has a PERSON read and signed off on this assessment. Nothing else sets this true:
    * only `npm run review`, one row at a time, after the sentence has actually been read.
    */
   reviewed: boolean
   /**
-   * Has the assessment been through the automated adversarial check — a second model pass
+   * Has the assessment been through the automated adversarial check, a second model pass
    * whose only job was to find generic reasoning, fabricated claims and overreach, and
    * whose findings were applied. This is a real quality gate but it is NOT human review,
    * and the interface never presents it as one.

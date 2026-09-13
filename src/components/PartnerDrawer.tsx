@@ -79,8 +79,8 @@ export default function PartnerDrawer({ id, onClose }: { id: string; onClose: ()
             <h3>Visible relationships</h3>
             {partner.currentLabs.length === 0 ? (
               <p className="muted sm">
-                Listed at organisation level with no lab named on the page. This is exactly the
-                gap the map exists to show.
+                Listed at organisation level with no lab named on the page, which is the gap this
+                map exists to show.
               </p>
             ) : (
               <ul className="assoc">

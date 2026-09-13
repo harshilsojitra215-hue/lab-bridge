@@ -120,9 +120,9 @@ export type SponsorStatus = 'engaged' | 'indicative' | 'unattributed'
 /**
  * The status a sponsor-relations team would actually triage on.
  *
- * engaged      — named in a partner or sponsor section of at least one lab page
- * indicative   — only appears in looser page context (event, venue, programme mention)
- * unattributed — listed at organisation level with no lab named at all
+ * engaged:      named in a partner or sponsor section of at least one lab page
+ * indicative:   only appears in looser page context (event, venue, programme mention)
+ * unattributed: listed at organisation level with no lab named at all
  */
 export function sponsorStatus(p: Partner): SponsorStatus {
   if (p.currentLabs.length === 0) return 'unattributed'

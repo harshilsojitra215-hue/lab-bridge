@@ -1,4 +1,4 @@
-/* Lab Bridge — stylesheet.
+/* Lab Bridge stylesheet.
 
    The palette is the one TUM Venture Labs publishes in their own stylesheet
    (tum-venture-labs.de/assets/styles.*.css): primary #3070B3 with its full scale, and the
@@ -130,11 +130,9 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   display: grid; place-items: center;
   border-radius: var(--r-sm);
   background: var(--p500);
-  font-family: var(--display);
-  font-weight: 600;
-  font-size: 12.5px;
-  letter-spacing: 0.02em;
+  color: #fff;
 }
+.brand-mark svg { width: 17px; height: 17px; }
 
 .brand-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
 .brand-text strong { font-family: var(--display); font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
@@ -608,7 +606,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .cov-sep { margin: 0 5px; color: var(--rule); }
 
 /* Matrix left at its own width, controls and key in a rail that stays put while the grid
-   scrolls — the key is only useful where the marks are still on screen. */
+   scrolls, since the key is only useful where the marks are still on screen. */
 .coverage-layout {
   display: grid;
   /* max-content so the grid track is the table's natural width and the panel does not force
@@ -1105,7 +1103,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   .content { padding: 16px 16px 48px; }
 
   /* The two-column row has nowhere to go at this width: the name gets crushed and the
-     reasoning sentence — the whole point of the row — truncates to nothing. Stack it. */
+     reasoning sentence, which is the point of the row, truncates to nothing. Stack it. */
   .row.overview { grid-template-columns: 1fr; gap: 8px; }
   .row.overview .sub { -webkit-line-clamp: 3; }
   .cell-move { padding-left: 38px; }

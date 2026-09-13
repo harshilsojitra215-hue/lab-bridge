@@ -23,9 +23,9 @@ export default function Method() {
     <>
       <p className="lede">
         How the map was built, and what it is not. Everything here comes from pages TUM Venture
-        Labs publish themselves, which sets a hard ceiling on what it can claim — a public logo
-        proves a relationship exists somewhere, not which lab owns it or how deep it goes. The
-        limits below are the part worth reading first.
+        Labs publish themselves, which sets a hard ceiling on what it can claim. A public logo
+        proves a relationship exists somewhere. It does not say which lab owns it, how deep it
+        goes, or whether it is still active. Start with the limits.
       </p>
 
       <div className="kpis">
@@ -75,8 +75,10 @@ export default function Method() {
           <li>No weighted score. A sentence can be argued with; a number cannot.</li>
         </ul>
         <p className="callout">
-          The audit caught a fabricated corporate campus, two sponsors given identical
-          reasoning, and several claims the sponsor record did not support. All were corrected.
+          The last audit re-fetched every source page and read the logo images behind them. It
+          removed two sponsors that were not on the page they cited, demoted two venue credits
+          recorded as relationships, and corrected seventeen evidence lines citing technologies
+          no lab lists. Validation now fails on any citation that is not in the record.
         </p>
       </section>
 

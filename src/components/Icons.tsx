@@ -13,6 +13,27 @@ const base = {
   strokeLinejoin: 'round' as const,
 }
 
+/**
+ * The mark is the encoding the whole tool runs on: a filled square for a relationship that
+ * exists, an open one for the lab that should have it and does not. Set on a diagonal so the
+ * grid is implied rather than drawn. Initials in a rounded box would have said nothing about
+ * the product and would have looked like every other template.
+ */
+export const IconMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="3" y="3" width="8" height="8" rx="1.5" fill="currentColor" />
+    <rect
+      x="13.9"
+      y="13.9"
+      width="7.2"
+      height="7.2"
+      rx="1.2"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    />
+  </svg>
+)
+
 export const IconOverview = () => (
   <svg {...base} aria-hidden="true">
     <rect x="3" y="3" width="7" height="8" rx="1" />

@@ -4,7 +4,7 @@ import type { Fit } from '../types'
  * One assessment per partner per lab.
  *
  * Only assessments that came back as something other than `no_fit` are stored. Any pair not
- * listed here was considered and judged no fit — `fitFor()` in derive.ts returns `no_fit` for
+ * listed here was considered and judged no fit. `fitFor()` in derive.ts returns `no_fit` for
  * anything missing. Storing ~800 empty rows would add nothing.
  *
  * `existing` is decided by the data, not by judgement: it means the partner's `currentLabs`
@@ -721,7 +721,7 @@ export const fits: Fit[] = [
     reasoning: 'An autonomous VTOL aircraft is a flying robot, and onboard AI-based reconnaissance is exactly the autonomous systems work this lab names.',
     evidence: ['Partner sectors: AI-based aerial reconnaissance, electric VTOL drones', 'Lab technologies: autonomous systems, robotics'] },
   { partnerId: 'quantum-systems', labId: 'sw-heilbronn', status: 'strong_candidate', reviewed: true, audited: true,
-    reasoning: 'Quantum Systems runs its reconnaissance models on the aircraft rather than in the ground station, which is edge AI on embedded systems — two of the six technologies this lab lists.',
+    reasoning: 'Quantum Systems runs its reconnaissance models on the aircraft rather than in the ground station, which is edge AI on embedded systems, two of the six technologies this lab lists.',
     evidence: ['Partner sectors: edge computing on aircraft', 'Lab technologies: edge AI, embedded systems'] },
   { partnerId: 'quantum-systems', labId: 'mobility', status: 'possible', reviewed: false, audited: false,
     reasoning: 'Electric VTOL overlaps with the urban air mobility this lab touches, though Quantum Systems builds reconnaissance aircraft rather than passenger vehicles.',

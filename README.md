@@ -19,24 +19,24 @@ is built entirely from information published on their own website.
 
 Six sections. Three of them carry the argument; the rest are the supporting record.
 
-**Cross-lab — the opportunity queue.** The output. Every sponsor-and-lab pair scored a strong
+**Cross-lab: the opportunity queue.** The output. Every sponsor-and-lab pair scored a strong
 candidate where that sponsor already works with a *different* lab, ranked by how many existing
 relationships the sponsor holds, because a company sitting in three labs is a warmer
 introduction than one sitting in one. The "introduced by" column names the lab that already
 holds the relationship. That column is the operational payload: it turns an observation into a
 next action with a named owner.
 
-**Coverage — the map.** Every collected sponsor against all twelve labs. Four cell states: a
+**Coverage: the map.** Every collected sponsor against all twelve labs. Four cell states: a
 solid square means a relationship already exists, the same square hollow means an untapped
 strong fit, a faint square means a possible fit, and an empty cell means no fit. Each mark is
-drawn in its own lab's colour. The encoding is the argument — reading across a row, the pattern
+drawn in its own lab's colour. The encoding is the argument. Reading across a row, the pattern
 of solid against hollow is the finding, before you read a word.
 
 **Sponsor detail.** Click any sponsor anywhere: what they do, which labs they are visibly
 associated with and on what evidence, every lab fit with its reasoning sentence and review
 state, and a link back to the page the record came from.
 
-Every screen has its own address — `#/crosslab`, `#/sponsors/bmw` — because the first thing
+Every screen has its own address, such as `#/crosslab` or `#/sponsors/bmw`, because the first thing
 anyone does with a finding is show it to someone else, and that is impossible if the whole tool
 lives at one URL. The back button closes a drawer rather than leaving the site.
 
@@ -56,12 +56,14 @@ first than discovered later.
   owns it, how deep it goes, whether it is active, or who the contact is.** Existing
   associations here are indicative, not authoritative.
 - Where a partner appears in a named "Partners" or "Sponsors" section on a lab page, the
-  association is marked **confirmed**. Where it appears in any other page context — an event
-  sponsor credit, a venue mention, a programme listing — it is marked **inferred**, and the
+  association is marked **confirmed**. Where it appears in any other page context, such as an
+  event sponsor credit, a venue mention or a programme listing, it is marked **inferred**, and the
   exact wording found on the page is shown in the interface.
 - Every partner links back to the page it was found on.
-- Model-written assessments that a person has not yet checked are marked unreviewed, with an
-  amber dot on the cell and the word "Unreviewed" in every table row.
+- Every assessment carries one of three states, and the interface shows which. **Reviewed**
+  means a person read the sentence and accepted it. **Auto-checked** means it passed the
+  adversarial pass but no person has signed it. **Unchecked** means neither has run. The last
+  two carry an amber dot, because a model checking a model is not human review.
 
 Not collected, by choice: named individuals, contact details, anything behind a login,
 anything purchased or scraped. This is an organisation-level map, which is both correct under
@@ -86,8 +88,9 @@ first pass under a deliberately narrow brief:
 - return `no_fit` rather than stretch for a justification
 - name the specific overlap in every sentence
 
-A person then reviewed the output. Every cell and every row in the interface shows which state
-it is in.
+A person then works through the output row by row. That is deliberately slow and deliberately
+incomplete: at the time of writing 12 of 207 assessments are signed off, and the interface
+reports that number rather than rounding it up. `npm run queue` is the reading order.
 
 ### The failure mode, since it is worth writing down
 
@@ -97,7 +100,7 @@ sentences like "strong strategic alignment with this lab's focus areas", which n
 and survives no scrutiny.
 
 The rule that fixed it is narrow: **if the sentence does not name a product line, a material,
-a market, or a technology that both sides actually touch, it is not a fit — it is a sentence
+a market, or a technology that both sides actually touch, it is not a fit. It is a sentence
 about a fit.** Reviewing was mostly deleting.
 
 ---
@@ -115,7 +118,7 @@ Build for deployment:
 npm run build
 ```
 
-Static output lands in `dist/`. There is no backend, no database and no authentication — the
+Static output lands in `dist/`. There is no backend, no database and no authentication. The
 data is seeded JSON compiled into the bundle, which is all this needs.
 
 To produce a single self-contained HTML file for sharing:
@@ -124,7 +127,7 @@ To produce a single self-contained HTML file for sharing:
 SINGLEFILE=1 npm run build
 ```
 
-That one lands in `dist-single/`, deliberately not in `dist/` — the two builds are not
+That one lands in `dist-single/`, deliberately not in `dist/`, because the two builds are not
 interchangeable, and a 300 kB inlined page quietly replacing the deployed bundle is a bad
 surprise to find later.
 
@@ -165,7 +168,7 @@ system:
 
 - every association carries real ownership, stage and history instead of a confirmed or
   inferred flag
-- **collision detection** becomes possible — two labs approaching the same partner in the same
+- **collision detection** becomes possible, meaning two labs approaching the same partner in the same
   quarter without knowing it. Public data cannot support this at all.
 - a **best-practice layer** per partner, so the next lab to approach a company starts from what
   the last one learned rather than from nothing

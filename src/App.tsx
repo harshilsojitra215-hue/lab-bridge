@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import {
   IconCrossLab,
+  IconMark,
   IconLabs,
   IconMatrix,
   IconMethod,
@@ -43,7 +44,7 @@ interface Route {
  * State lives in the URL: `#/sponsors`, `#/crosslab/bmw`.
  *
  * Not for its own sake. This gets sent as a link, and the first thing anyone does with a
- * finding is show it to someone else — which is impossible if every screen has the same
+ * finding is show it to someone else, which is impossible if every screen has the same
  * address. It also means the back button closes a drawer instead of leaving the site, which
  * is the behaviour a browser has already promised the reader on our behalf.
  */
@@ -89,7 +90,7 @@ export default function App() {
   // A shared link should say what it points at in the tab and the bookmark, not just on screen.
   useEffect(() => {
     const name = openPartner ? partners.find((p) => p.id === openPartner)?.name : null
-    document.title = `${name ?? title} — Lab Bridge`
+    document.title = `${name ?? title} · Lab Bridge`
   }, [title, openPartner])
 
   return (
@@ -97,7 +98,7 @@ export default function App() {
       <aside className="sidebar">
         <div className="brand">
           <span className="brand-mark" aria-hidden="true">
-            LB
+            <IconMark />
           </span>
           <span className="brand-text">
             <strong>Lab Bridge</strong>
@@ -189,7 +190,7 @@ export default function App() {
         is the last place the "independent, not affiliated" line can afford to go missing.
       */}
       <footer className="print-note">
-        Lab Bridge — an independent prototype by Harshil Sojitra, built from information published
+        Lab Bridge. An independent prototype by Harshil Sojitra, built from information published
         on tum-venture-labs.de. Not affiliated with, endorsed by, or requested by TUM Venture Labs,
         TUM, or UnternehmerTUM. Lab associations shown here are read from public pages and are
         indicative, not authoritative.
