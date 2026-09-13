@@ -137,6 +137,18 @@ export default function App() {
         </div>
       </div>
 
+      {/*
+        The disclaimer normally lives in the sidebar, and print hides the sidebar. A PDF of this
+        page is exactly the artefact that gets forwarded to someone who never saw the site, so it
+        is the last place the "independent, not affiliated" line can afford to go missing.
+      */}
+      <footer className="print-note">
+        Lab Bridge — an independent prototype by Harshil Sojitra, built from information published
+        on tum-venture-labs.de. Not affiliated with, endorsed by, or requested by TUM Venture Labs,
+        TUM, or UnternehmerTUM. Lab associations shown here are read from public pages and are
+        indicative, not authoritative.
+      </footer>
+
       {openPartner && (
         <PartnerDrawer id={openPartner} onClose={() => setOpenPartner(null)} />
       )}

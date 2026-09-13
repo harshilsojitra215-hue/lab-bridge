@@ -1003,9 +1003,22 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 /* ═══════════════════════════════════════════════════════════════ print */
 
+.print-note { display: none; }
+
 @media print {
   body { background: #fff; }
   .sidebar, .topbar-tools, .cell-action, .scrim { display: none !important; }
+
+  .print-note {
+    display: block;
+    margin-top: 18px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    font-size: 9.5px;
+    line-height: 1.5;
+    color: #555;
+    max-width: 90ch;
+  }
   .shell { display: block; }
   .topbar { position: static; border-bottom: 2px solid var(--p600); }
   .content { padding: 0; max-width: none; }

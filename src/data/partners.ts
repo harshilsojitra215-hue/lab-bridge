@@ -657,6 +657,11 @@ export const partners: Partner[] = [
     currentLabs: [],
   },
   {
+    // Deliberately carries no lab assessment. This ministry's connection to the ecosystem runs
+    // through Legal Tech Colab, which is a separate non-profit on its own domain and is not one
+    // of the twelve labs. Scoring it against the twelve would be inventing a relationship to
+    // fill a row. `npm run validate` reports it as unscored rather than rejected, which is the
+    // honest description.
     id: 'bavarian-ministry-justice',
     name: 'Bavarian State Ministry of Justice',
     type: 'public_body',

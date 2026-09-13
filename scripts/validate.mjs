@@ -123,6 +123,16 @@ for (const f of fits) {
   }
 }
 
+/**
+ * A partner with no fit rows at all renders as twelve silent no-fits. That is indistinguishable
+ * in the interface from twelve deliberate rejections, but it is not the same thing: one is a
+ * judgement, the other is an omission. Flagged so the gap is a decision rather than an oversight.
+ */
+const assessed = new Set(fits.map((f) => f.partnerId))
+for (const p of partners) {
+  if (!assessed.has(p.id)) warnings.push(`${p.id}: no assessment against any lab — unscored, not rejected`)
+}
+
 // every stated association must have a matching `existing` cell, and vice versa
 for (const p of partners) {
   for (const a of p.currentLabs) {

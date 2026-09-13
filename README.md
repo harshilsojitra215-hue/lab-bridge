@@ -15,21 +15,29 @@ is built entirely from information published on their own website.
 
 ## What it does
 
-Three views, one page.
+Six sections. Three of them carry the argument; the rest are the supporting record.
 
-**The map.** A matrix of every collected partner against all twelve labs. Four cell states:
-a solid green square means a relationship already exists, the same square hollow means an
-untapped strong fit, a faint grey square means a possible fit, and an empty cell means no fit.
-The encoding is the argument — reading across a row, the pattern of solid and hollow squares
-is the finding, before you read a word.
+**Cross-lab — the opportunity queue.** The output. Every sponsor-and-lab pair scored a strong
+candidate where that sponsor already works with a *different* lab, ranked by how many existing
+relationships the sponsor holds, because a company sitting in three labs is a warmer
+introduction than one sitting in one. The "introduced by" column names the lab that already
+holds the relationship. That column is the operational payload: it turns an observation into a
+next action with a named owner.
 
-**Partner detail.** Click any partner: what they do, which labs they are visibly associated
-with and on what evidence, and all twelve labs ranked with the reasoning sentence for each.
+**Coverage — the map.** Every collected sponsor against all twelve labs. Four cell states: a
+solid square means a relationship already exists, the same square hollow means an untapped
+strong fit, a faint square means a possible fit, and an empty cell means no fit. Each mark is
+drawn in its own lab's colour. The encoding is the argument — reading across a row, the pattern
+of solid against hollow is the finding, before you read a word.
 
-**Opportunity queue.** Every partner-and-lab pair scored a strong candidate where that partner
-already works with a different lab, ranked by how many existing relationships the partner
-holds. The final column names the lab that would make the introduction. That column is the
-operational payload: it turns an observation into a next action with a named owner.
+**Sponsor detail.** Click any sponsor anywhere: what they do, which labs they are visibly
+associated with and on what evidence, every lab fit with its reasoning sentence and review
+state, and a link back to the page the record came from.
+
+Around those: **Overview** puts the four counts that matter next to the strongest introduction
+per sponsor; **Sponsors** is the filterable table of all of them; **Labs** is the same data read
+per lab, with the best introductions available into each; and **Method** is the pipeline, the
+scoring rules, and what this cannot tell you.
 
 ---
 
@@ -110,6 +118,18 @@ To produce a single self-contained HTML file for sharing:
 SINGLEFILE=1 npm run build
 ```
 
+That one lands in `dist-single/`, deliberately not in `dist/` — the two builds are not
+interchangeable, and a 300 kB inlined page quietly replacing the deployed bundle is a bad
+surprise to find later.
+
+Two more, which exist because the honesty claims on the page have to be enforced somewhere:
+
+```bash
+npm run validate     # data integrity, and every evidence citation checked against the record
+npm run queue        # the opportunity queue in ranked order, for reading before signing off
+npm run review       # what still needs a person; with arguments, signs one row off
+```
+
 ---
 
 ## Where the data lives
@@ -145,9 +165,17 @@ Both of those are named in the job description, and neither is buildable from th
 
 ## Design notes
 
-Near-monochrome, one accent colour that means one thing, a serif for anything a person wrote
-and a tabular sans for anything the data says. No gradients, no shadows, no rounded cards, no
-decorative icons, no motion that is not a direct response to a click.
+The palette is the one TUM Venture Labs publish in their own stylesheet: primary `#3070B3`
+with its full scale, and the twelve lab accents, read off
+`tum-venture-labs.de/assets/styles.*.css` rather than picked by eye. Using someone's colours
+is not the same as using their identity, so there is no logo, no wordmark and no downloaded
+asset anywhere in this repository, and the line saying this is independent and unaffiliated
+sits in the sidebar on every screen.
+
+Beyond that: colour carries meaning and nothing else. A lab colour only ever means that lab.
+Amber only ever means not yet signed off by a person. No gradient decorating a surface, no
+shadow doing work a one-pixel border can do, no motion that is not a direct response to a
+click.
 
 The test that mattered most: print the page to PDF. If it still holds up as a document, the
 information design is doing the work. If it collapses, the layout was leaning on
