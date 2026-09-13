@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   IconCrossLab,
   IconLabs,
@@ -32,19 +32,65 @@ const nav: { id: ViewId; label: string; icon: () => JSX.Element; count?: number 
 
 const searchable = new Set<ViewId>(['sponsors', 'crosslab', 'labs'])
 
+const viewIds = new Set<string>(nav.map((n) => n.id))
+
+interface Route {
+  view: ViewId
+  partner: string | null
+}
+
+/**
+ * State lives in the URL: `#/sponsors`, `#/crosslab/bmw`.
+ *
+ * Not for its own sake. This gets sent as a link, and the first thing anyone does with a
+ * finding is show it to someone else — which is impossible if every screen has the same
+ * address. It also means the back button closes a drawer instead of leaving the site, which
+ * is the behaviour a browser has already promised the reader on our behalf.
+ */
+function parseHash(): Route {
+  const [rawView, rawPartner] = window.location.hash.replace(/^#\/?/, '').split('/')
+  return {
+    view: viewIds.has(rawView) ? (rawView as ViewId) : 'overview',
+    partner: rawPartner && partners.some((p) => p.id === rawPartner) ? rawPartner : null,
+  }
+}
+
 export default function App() {
-  const [view, setView] = useState<ViewId>('overview')
-  const [openPartner, setOpenPartner] = useState<string | null>(null)
+  const [route, setRoute] = useState<Route>(parseHash)
   const [query, setQuery] = useState('')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
+  useEffect(() => {
+    const onHash = () => setRoute(parseHash())
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  const { view, partner: openPartner } = route
+
   const go = (v: ViewId) => {
-    setView(v)
+    window.location.hash = `#/${v}`
     setQuery('')
     setFiltersOpen(false)
   }
 
+  const setOpenPartner = (id: string) => {
+    window.location.hash = `#/${view}/${id}`
+  }
+
+  // A drawer opened from a row is a history entry, so going back is the natural way to close it.
+  const closePartner = () => {
+    if (window.history.length > 1) window.history.back()
+    else window.location.hash = `#/${view}`
+  }
+
   const title = useMemo(() => nav.find((n) => n.id === view)!.label, [view])
+
+  // A shared link should say what it points at in the tab and the bookmark, not just on screen.
+  useEffect(() => {
+    const name = openPartner ? partners.find((p) => p.id === openPartner)?.name : null
+    document.title = `${name ?? title} — Lab Bridge`
+  }, [title, openPartner])
 
   return (
     <div className="shell">
@@ -150,7 +196,7 @@ export default function App() {
       </footer>
 
       {openPartner && (
-        <PartnerDrawer id={openPartner} onClose={() => setOpenPartner(null)} />
+        <PartnerDrawer id={openPartner} onClose={closePartner} />
       )}
     </div>
   )

@@ -21,6 +21,13 @@ const limits = [
 export default function Method() {
   return (
     <>
+      <p className="lede">
+        How the map was built, and what it is not. Everything here comes from pages TUM Venture
+        Labs publish themselves, which sets a hard ceiling on what it can claim — a public logo
+        proves a relationship exists somewhere, not which lab owns it or how deep it goes. The
+        limits below are the part worth reading first.
+      </p>
+
       <div className="kpis">
         <div className="kpi">
           <span className="kpi-value">{totals.assessed}</span>

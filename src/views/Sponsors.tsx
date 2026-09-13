@@ -43,6 +43,13 @@ export default function Sponsors({
 
   return (
     <>
+      <p className="lede">
+        Every organisation found on their public pages: what it does, which labs name it, and
+        whether that naming is a partner listing or a looser mention. <strong>Untapped</strong>{' '}
+        counts the labs where this sponsor is a strong fit but has no visible relationship.
+        Select any row for the full record and the page it came from.
+      </p>
+
       {filtersOpen && (
         <div className="filterbar">
           <div className="filter-group">

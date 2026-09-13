@@ -227,7 +227,45 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .link { color: var(--p600); font-size: 12.5px; font-weight: 500; }
 .link:hover { text-decoration: underline; text-underline-offset: 2px; }
 
-.lede { margin: 0 0 16px; max-width: 74ch; font-size: 13px; color: var(--muted); }
+.lede { margin: 0 0 16px; max-width: 78ch; font-size: 13px; color: var(--muted); line-height: 1.55; }
+.lede strong { color: var(--ink-2); font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════════════════ thesis */
+
+/* The opening argument. Set wider and quieter than a heading, closer to a standfirst than a
+   hero: it has to be read, not announced. The rule on the left carries the accent so the
+   block reads as the page speaking rather than as another card of data. */
+.thesis {
+  margin-bottom: 18px;
+  padding-left: 16px;
+  border-left: 3px solid var(--p500);
+}
+
+.thesis-lede {
+  margin: 0 0 8px;
+  max-width: 76ch;
+  font-size: 16.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  letter-spacing: -0.006em;
+}
+
+.thesis-sub {
+  margin: 0;
+  max-width: 76ch;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.link.inline {
+  font-size: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--p200);
+}
+.link.inline:hover { text-decoration-color: var(--p500); }
 
 /* ═══════════════════════════════════════════════════════════════ kpis */
 
@@ -291,6 +329,9 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border-bottom: 1px solid var(--rule-soft);
 }
 .panel-head h2 { font-size: 14px; font-weight: 600; }
+
+.panel-title { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.panel-sub { font-size: 11.5px; color: var(--faint); line-height: 1.45; max-width: 82ch; }
 
 /* ═══════════════════════════════════════════════════════════════ rows */
 

@@ -26,26 +26,62 @@ export default function Overview({
 
   return (
     <>
+      {/*
+        The argument, before the numbers. Someone arriving from a link has no idea what this is
+        for, and a dashboard that opens on four figures and a table asks them to work it out.
+        The numbers only mean something once the gap they measure has been named.
+      */}
+      <section className="thesis">
+        <p className="thesis-lede">
+          Twelve labs each develop their own sponsors. Sponsors are not domain specific — a
+          company one lab has already won is often a warm relationship for three others, and no
+          lab can see that from where it sits.
+        </p>
+        <p className="thesis-sub">
+          Lab Bridge maps every publicly listed partner against all twelve labs and names the lab
+          that could make each introduction. It is built from their public pages only, which is a
+          real limit:{' '}
+          <button className="link inline" onClick={() => onGo('method')}>
+            how it works, and what it cannot tell you
+          </button>
+          .
+        </p>
+      </section>
+
       <div className="kpis">
-        <Kpi value={totals.partners} label="Sponsors mapped" note="Each with a source URL" />
+        <Kpi
+          value={totals.partners}
+          label="Sponsors mapped"
+          note="Every one links to the page it was found on"
+        />
         <Kpi
           value={totals.partnersWithOpportunity}
-          label="With an untapped lab"
-          note="Strong fit, no relationship"
+          label="Could be introduced"
+          note="A strong fit for a lab that has not approached them"
           accent
         />
-        <Kpi value={opportunities.length} label="Warm introductions" note="Ranked in Cross-lab" />
+        <Kpi
+          value={opportunities.length}
+          label="Introductions available"
+          note="Sponsor-and-lab pairs, ranked in Cross-lab"
+        />
         <Kpi
           value={totals.inferredAssociations}
-          label="Unverified links"
-          note={`of ${totals.confirmedAssociations + totals.inferredAssociations} total`}
+          label="Unconfirmed associations"
+          note={`of ${totals.confirmedAssociations + totals.inferredAssociations} — read from page context, not a partner list`}
           warn
         />
       </div>
 
       <section className="panel">
         <div className="panel-head">
-          <h2>Priority introductions</h2>
+          <div className="panel-title">
+            <h2>Priority introductions</h2>
+            <span className="panel-sub">
+              The strongest opening per sponsor. Left tag is the lab that already holds the
+              relationship; right tag is the lab that could be introduced.
+            </span>
+          </div>
           <button className="link" onClick={() => onGo('crosslab')}>
             View all {opportunities.length}
           </button>
@@ -80,7 +116,13 @@ export default function Overview({
 
       <section className="panel">
         <div className="panel-head">
-          <h2>Lab coverage</h2>
+          <div className="panel-title">
+            <h2>Lab coverage</h2>
+            <span className="panel-sub">
+              How many sponsors each lab already works with, against how many it could reach
+              through another lab.
+            </span>
+          </div>
           <button className="link" onClick={() => onGo('labs')}>
             All twelve labs
           </button>

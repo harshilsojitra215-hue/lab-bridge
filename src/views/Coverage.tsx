@@ -24,6 +24,14 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
 
   return (
     <>
+      <p className="lede">
+        All {partnersRanked.length} sponsors against all twelve labs. Read across a row: a solid
+        mark is a relationship that exists, the same mark hollow is a lab that should have one
+        and does not. That pattern — solid next to hollow — is the finding, and it is the whole
+        argument for looking at sponsors across labs rather than inside one. Hover any mark for
+        the reasoning; select a row for the full record.
+      </p>
+
       <div className="cov-tools">
         <div className="legend">
           <span className="legend-item">

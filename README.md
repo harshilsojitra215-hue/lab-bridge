@@ -36,6 +36,10 @@ of solid against hollow is the finding, before you read a word.
 associated with and on what evidence, every lab fit with its reasoning sentence and review
 state, and a link back to the page the record came from.
 
+Every screen has its own address — `#/crosslab`, `#/sponsors/bmw` — because the first thing
+anyone does with a finding is show it to someone else, and that is impossible if the whole tool
+lives at one URL. The back button closes a drawer rather than leaving the site.
+
 Around those: **Overview** puts the four counts that matter next to the strongest introduction
 per sponsor; **Sponsors** is the filterable table of all of them; **Labs** is the same data read
 per lab, with the best introductions available into each; and **Method** is the pipeline, the
