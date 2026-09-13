@@ -39,7 +39,9 @@
   --ok: #1B7F4B;
 
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --display: "Gotham Screensmart", "Jost", "Inter", var(--sans);
+  /* Gotham Screensmart is TUM Venture Labs’ own face and is not served here, so it renders
+     only on a machine that already has it. Jost is what everyone else sees. */
+  --display: "Gotham Screensmart", "Jost", var(--sans);
 
   --sidebar: 236px;
   --cell: 32px;
@@ -55,7 +57,7 @@ body {
   background: var(--canvas);
   color: var(--ink);
   font-family: var(--sans);
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.5;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
@@ -106,11 +108,27 @@ button {
    that arrives as you reach it is content you cannot search. Everything below fires once, on
    entering a view, and is over inside a quarter of a second. */
 
-.content { animation: view-in 190ms cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+/* backwards, not both. With `both` the final keyframe is retained as an animated value, so
+   .content kept a transform forever, and any transform other than none makes an element the
+   containing block for its position: fixed descendants. That silently reparented the matrix
+   tooltip, displacing it by the content origin and defeating its own edge clamping, which put
+   it up to 175px off the right of the screen. backwards holds the from-state before the
+   animation and hands the element back to its own styles afterwards. */
+.content { animation: view-in 190ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
 
+/* Transform only, no fade, and the reason is worth stating.
+
+   An entrance that animates opacity from zero is invisible for as long as the animation has
+   not advanced, and an animation only advances when something is compositing frames. A tab in
+   the background, a print renderer, or the headless browser a chat client uses to unfurl a
+   link all produce a page that is technically correct and completely blank. For a URL whose
+   whole job is to be pasted into an email, that is the wrong failure.
+
+   Movement alone still reads as an entrance. If it never runs, the worst case is content
+   sitting six pixels low, which nobody will ever notice. */
 @keyframes view-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: none; }
+  from { transform: translateY(6px); }
+  to   { transform: none; }
 }
 
 /* The six openings on the overview land in sequence. The stagger is small enough to read as
@@ -121,8 +139,8 @@ button {
 }
 
 @keyframes row-in {
-  from { opacity: 0; transform: translateY(5px); }
-  to   { opacity: 1; transform: none; }
+  from { transform: translateY(5px); }
+  to   { transform: none; }
 }
 
 /* Marks land column by column, left to right, so the first thing the grid does is show that
@@ -133,9 +151,10 @@ button {
   animation-delay: calc(var(--col, 0) * 16ms + 80ms);
 }
 
+/* Scales from 0.55 rather than 0.4 so a frozen mark is still legible as a mark. */
 @keyframes mark-in {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
-  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  from { transform: translate(-50%, -50%) scale(0.55); }
+  to   { transform: translate(-50%, -50%) scale(1); }
 }
 
 /* The authored still state. Not "animations off": every element is placed exactly where the
@@ -157,12 +176,10 @@ button {
   .content,
   .row.enter {
     animation: none !important;
-    opacity: 1;
     transform: none;
   }
   .cell .mark {
     animation: none !important;
-    opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
   .drawer, .scrim { animation: none !important; opacity: 1; transform: none; }
@@ -200,7 +217,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .brand-mark svg { width: 17px; height: 17px; }
 
 .brand-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
-.brand-text strong { font-family: var(--display); font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
+.brand-text strong { font-family: var(--display); font-size: 14px; font-weight: 600; letter-spacing: -0.01em; }
 .brand-text span { font-size: 11px; color: var(--p200); }
 
 .nav { display: flex; flex-direction: column; gap: 1px; }
@@ -212,7 +229,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   padding: 8px 10px;
   border-radius: var(--r-sm);
   color: var(--p200);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.2;
   transition: background 90ms linear, color 90ms linear;
 }
@@ -237,7 +254,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   margin: auto 0 0;
   padding: 14px 8px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: 10.5px;
+  font-size: 11px;
   line-height: 1.45;
   color: var(--p300);
 }
@@ -260,8 +277,8 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border-bottom: 1px solid var(--rule);
 }
 
-.topbar-title h1 { font-size: 19px; line-height: 1.2; }
-.crumb { display: block; font-size: 11.5px; color: var(--faint); margin-top: 2px; }
+.topbar-title h1 { font-size: 22px; line-height: 1.2; }
+.crumb { display: block; font-size: 12.5px; color: var(--faint); margin-top: 2px; }
 
 .topbar-tools { display: flex; align-items: center; gap: 8px; }
 
@@ -309,12 +326,12 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 }
 .icon-btn:hover { background: var(--canvas); color: var(--ink); }
 
-.content { padding: 22px 28px 64px; max-width: 1480px; width: 100%; }
+.content { padding: 22px 28px 64px; max-width: 1240px; width: 100%; }
 
 .link { color: var(--p600); font-size: 12.5px; font-weight: 500; }
 .link:hover { text-decoration: underline; text-underline-offset: 2px; }
 
-.lede { margin: 0 0 16px; max-width: 78ch; font-size: 13px; color: var(--muted); line-height: 1.55; }
+.lede { margin: 0 0 20px; max-width: 58ch; font-size: 14px; color: var(--muted); line-height: 1.55; }
 .lede strong { color: var(--ink-2); font-weight: 600; }
 
 /* ═══════════════════════════════════════════════════════════════ thesis */
@@ -323,15 +340,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
    hero: it has to be read, not announced. The rule on the left carries the accent so the
    block reads as the page speaking rather than as another card of data. */
 .thesis {
-  margin-bottom: 18px;
+  margin-bottom: 32px;
   padding-left: 16px;
   border-left: 3px solid var(--p500);
 }
 
 .thesis-lede {
   margin: 0 0 8px;
-  max-width: 76ch;
-  font-size: 16.5px;
+  max-width: 58ch;
+  font-size: 17px;
   line-height: 1.5;
   color: var(--ink);
   letter-spacing: -0.006em;
@@ -339,7 +356,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 .thesis-sub {
   margin: 0;
-  max-width: 76ch;
+  max-width: 58ch;
   font-size: 12.5px;
   line-height: 1.55;
   color: var(--muted);
@@ -360,7 +377,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(184px, 1fr));
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 40px;
 }
 
 .kpi {
@@ -385,7 +402,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 .kpi-value {
   font-family: var(--display);
-  font-size: 30px;
+  font-size: 40px;
   font-weight: 600;
   line-height: 1.06;
   letter-spacing: -0.022em;
@@ -415,10 +432,10 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   padding: 12px 16px;
   border-bottom: 1px solid var(--rule-soft);
 }
-.panel-head h2 { font-size: 14px; font-weight: 600; }
+.panel-head h2 { font-size: 17px; font-weight: 600; }
 
 .panel-title { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.panel-sub { font-size: 11.5px; color: var(--faint); line-height: 1.45; max-width: 82ch; }
+.panel-sub { font-size: 12.5px; color: var(--faint); line-height: 1.45; max-width: 62ch; }
 
 /* ═══════════════════════════════════════════════════════════════ rows */
 
@@ -437,7 +454,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 .table-head {
   padding: 0 16px 7px;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.055em;
   text-transform: uppercase;
@@ -475,18 +492,18 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border: 1px solid var(--p100);
   color: var(--p600);
   font-family: var(--display);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
 }
-.tile.sm { width: 20px; height: 20px; font-size: 8.5px; border-radius: 3px; }
+.tile.sm { width: 20px; height: 20px; font-size: 11px; border-radius: 3px; }
 .tile.lg { width: 42px; height: 42px; font-size: 14px; border-radius: var(--r); }
 
 .name-block { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; }
-.name-block strong { font-size: 13px; font-weight: 600; color: var(--ink); }
+.name-block strong { font-size: 14px; font-weight: 600; color: var(--ink); }
 
 .sub {
-  font-size: 11.5px;
+  font-size: 12.5px;
   color: var(--muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -496,11 +513,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 }
 .row.overview .sub { -webkit-line-clamp: 2; max-width: 62ch; }
 
-.cell-type, .cell-sector { font-size: 12px; color: var(--muted); }
+.cell-type, .cell-sector { font-size: 12.5px; color: var(--muted); }
 .cell-sector { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .cell-why {
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--ink-2);
   line-height: 1.4;
   display: -webkit-box;
@@ -512,14 +529,14 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .cell-labs, .cell-intro, .cell-target { display: flex; flex-wrap: wrap; gap: 4px; }
 
 .cell-move { display: flex; align-items: center; gap: 8px; flex: none; }
-.arrow { color: var(--p400); font-size: 13px; }
+.arrow { color: var(--p400); font-size: 14px; }
 
 .cell-action { color: var(--p200); display: grid; place-items: center; }
 .row:hover .cell-action { color: var(--p500); }
 
 .num { text-align: right; font-variant-numeric: tabular-nums; }
 .num strong { color: var(--p600); font-weight: 600; }
-.rank { font-size: 11.5px; color: var(--faint); }
+.rank { font-size: 12.5px; color: var(--faint); }
 
 .empty {
   padding: 28px 16px;
@@ -531,7 +548,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border-radius: var(--r);
 }
 
-.tablefoot { margin: 10px 2px 0; font-size: 11.5px; color: var(--faint); max-width: 84ch; }
+.tablefoot { margin: 10px 2px 0; font-size: 12.5px; color: var(--faint); max-width: 62ch; }
 
 /* labels ---------------------------------------------------------------- */
 
@@ -540,7 +557,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   align-items: center;
   padding: 2px 7px;
   border-radius: 3px;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 500;
   line-height: 1.5;
   white-space: nowrap;
@@ -556,7 +573,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   display: inline-block;
   padding: 2px 8px;
   border-radius: 20px;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 500;
   line-height: 1.55;
   white-space: nowrap;
@@ -570,7 +587,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   display: inline-block;
   padding: 1px 7px;
   border-radius: 3px;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -597,7 +614,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--warn);
   white-space: nowrap;
   cursor: help;
@@ -625,7 +642,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 }
 .filter-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .filter-label {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.055em;
   text-transform: uppercase;
@@ -636,7 +653,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .chip {
   padding: 3px 10px;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 12.5px;
   border: 1px solid var(--rule);
   background: #fff;
   color: var(--muted);
@@ -659,14 +676,14 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   gap: 10px;
   padding: 9px 16px;
   border-top: 1px solid var(--rule-soft);
-  font-size: 12px;
+  font-size: 12.5px;
   min-width: 0;
 }
 .cov-dot { width: 8px; height: 8px; border-radius: 2px; }
 .cov-name { font-weight: 500; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .cov-bar { height: 5px; border-radius: 3px; background: var(--rule-soft); overflow: hidden; }
 .cov-fill { display: block; height: 100%; border-radius: 3px; opacity: 0.85; }
-.cov-nums { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+.cov-nums { font-size: 12.5px; color: var(--muted); white-space: nowrap; }
 .cov-nums strong { color: var(--ink); font-weight: 600; }
 .cov-sep { margin: 0 5px; color: var(--rule); }
 
@@ -710,14 +727,14 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .cov-side .filter-group { gap: 5px; }
 
 .legend { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
-.legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+.legend-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
 
 /* The swatches teach fill against outline, which is the actual encoding. Every mark in the
    grid is drawn in its own lab's colour, so the legend is deliberately neutral and says so. */
 .sw { width: 11px; height: 11px; border-radius: 2px; flex: none; }
-.sw.solid { background: var(--ink-2); }
-.sw.hollow { background: #fff; border: 1.5px solid var(--ink-2); }
-.sw.faint { background: var(--ink-2); opacity: 0.22; }
+.sw.solid { background: var(--p800); }
+.sw.hollow { background: #fff; border: 1.5px solid var(--p600); }
+.sw.faint { background: var(--p800); opacity: 0.18; }
 .sw.dotted { background: var(--warn); border-radius: 50%; width: 7px; height: 7px; }
 
 .legend-note { font-size: 11px; color: var(--faint); padding-left: 4px; border-left: 1px solid var(--rule); }
@@ -746,7 +763,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .lab-nums { display: flex; gap: 22px; margin: 0 0 11px; }
 .lab-nums div { display: flex; flex-direction: column; }
 .lab-nums dt {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.055em;
   text-transform: uppercase;
@@ -755,7 +772,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .lab-nums dd {
   margin: 1px 0 0;
   font-family: var(--display);
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.018em;
@@ -764,7 +781,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 .lab-domain {
   margin: 0 0 10px;
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1.45;
   color: var(--muted);
   display: -webkit-box;
@@ -775,7 +792,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 .lab-tech { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 12px; padding: 0; }
 .lab-tech li {
-  font-size: 10.5px;
+  font-size: 11px;
   padding: 2px 7px;
   border-radius: 3px;
   background: var(--canvas);
@@ -786,7 +803,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .lab-cands { margin-top: auto; padding-top: 11px; border-top: 1px solid var(--rule-soft); }
 .micro {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.055em;
   text-transform: uppercase;
@@ -802,7 +819,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border-radius: 20px;
   border: 1px solid var(--rule);
   background: #fff;
-  font-size: 11.5px;
+  font-size: 12.5px;
   color: var(--ink-2);
 }
 .cand:hover { border-color: var(--p300); background: var(--p50); color: var(--p700); }
@@ -813,11 +830,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   background: var(--surface);
   border: 1px dashed var(--rule);
   border-radius: var(--r);
-  max-width: 78ch;
+  max-width: 58ch;
 }
-.outside h3 { font-size: 13px; margin-bottom: 4px; }
-.outside p { margin: 0 0 6px; font-size: 12px; color: var(--muted); }
-.outside a { font-size: 12px; }
+.outside h3 { font-size: 14px; margin-bottom: 4px; }
+.outside p { margin: 0 0 6px; font-size: 12.5px; color: var(--muted); }
+.outside a { font-size: 12.5px; }
 
 /* ═══════════════════════════════════════════════════════════════ matrix */
 
@@ -833,12 +850,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border: 1px solid var(--rule);
   border-radius: var(--r);
   overflow: auto;
+  scrollbar-gutter: stable;
   max-height: calc(100vh - 240px);
   scrollbar-width: thin;
   scrollbar-color: var(--p200) transparent;
 }
 
-.matrix { border-collapse: separate; border-spacing: 0; font-size: 12px; }
+.matrix { border-collapse: separate; border-spacing: 0; font-size: 12.5px; }
 
 .matrix thead th {
   position: sticky;
@@ -859,7 +877,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   min-width: 210px;
   text-align: left;
   padding: 0 12px 8px;
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.055em;
   text-transform: uppercase;
@@ -872,7 +890,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .labhead-text {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--muted);
   white-space: nowrap;
@@ -905,14 +923,14 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
    pushes the grid past the space the rail leaves it. The few names that need it truncate; the
    full name is in the tooltip and the record. */
 .rowname {
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--ink-2);
   max-width: 186px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.rowcount { font-size: 10px; color: var(--faint); flex: none; }
+.rowcount { font-size: 11px; color: var(--faint); flex: none; }
 .matrix tbody tr:hover .rowhead { background: var(--p50); }
 .matrix tbody tr:hover .rowname { color: var(--p700); }
 
@@ -935,13 +953,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border-radius: 2px;
 }
 .c-existing { cursor: pointer; }
-.c-existing .mark { background: var(--lab, var(--p600)); }
+.c-existing .mark { background: var(--p800); }
 
 .c-strong_candidate { cursor: pointer; }
-.c-strong_candidate .mark { border: 1.5px solid var(--lab, var(--p500)); background: #fff; }
+.c-strong_candidate .mark { border: 1.5px solid var(--p600); background: #fff; }
 
 .c-possible { cursor: pointer; }
-.c-possible .mark { background: var(--lab, var(--p300)); opacity: 0.22; }
+.c-possible .mark { background: var(--p800); opacity: 0.18; }
 
 .c-no_fit .mark { display: none; }
 
@@ -960,7 +978,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   color: #fff;
   border-radius: var(--r-sm);
   padding: 9px 11px;
-  font-size: 11.5px;
+  font-size: 12.5px;
   line-height: 1.45;
   pointer-events: none;
   box-shadow: 0 6px 20px rgba(11, 19, 40, 0.28);
@@ -968,7 +986,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .tip-head { display: flex; align-items: center; gap: 6px; font-weight: 600; margin-bottom: 4px; }
 .tip-dot { width: 7px; height: 7px; border-radius: 2px; flex: none; }
 .tip p { margin: 0; color: var(--p100); }
-.tip-meta { margin-top: 5px; font-size: 10.5px; color: var(--p300); }
+.tip-meta { margin-top: 5px; font-size: 11px; color: var(--p300); }
 
 /* ═══════════════════════════════════════════════════════════════ method */
 
@@ -989,11 +1007,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   background: var(--p50);
   border: 1px solid var(--p200);
   color: var(--p600);
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
 }
 .step-body { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
-.step-body strong { font-size: 13px; font-weight: 600; }
+.step-body strong { font-size: 14px; font-weight: 600; }
 .step-count {
   font-size: 11px;
   color: var(--p600);
@@ -1004,7 +1022,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 }
 
 .rules { margin: 0; padding: 12px 16px 4px 32px; }
-.rules li { font-size: 12.5px; color: var(--ink-2); margin-bottom: 6px; max-width: 82ch; }
+.rules li { font-size: 12.5px; color: var(--ink-2); margin-bottom: 6px; max-width: 58ch; }
 .rules li::marker { color: var(--p300); }
 
 .callout {
@@ -1015,7 +1033,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border-radius: 0 var(--r-sm) var(--r-sm) 0;
   font-size: 12.5px;
   color: var(--p700);
-  max-width: 82ch;
+  max-width: 58ch;
 }
 
 .limits { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
@@ -1028,7 +1046,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   border-right: 1px solid var(--rule-soft);
 }
 .limit strong { font-size: 12.5px; font-weight: 600; }
-.limit span { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.limit span { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
 
 /* ═══════════════════════════════════════════════════════════════ drawer */
 
@@ -1066,13 +1084,13 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 .drawer-body { flex: 1; overflow-y: auto; padding: 16px; }
 
-.what { margin: 0 0 11px; font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+.what { margin: 0 0 11px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
 
 .sectors { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }
 
 .drawer-section { margin-bottom: 22px; }
 .drawer-section h3 {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.055em;
   text-transform: uppercase;
@@ -1091,12 +1109,12 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   gap: 8px;
   padding: 7px 0;
   border-bottom: 1px solid var(--rule-soft);
-  font-size: 12px;
+  font-size: 12.5px;
 }
 .assoc li:last-child { border-bottom: 0; }
 .assoc-dot { width: 8px; height: 8px; border-radius: 2px; flex: none; }
 .conf {
-  font-size: 9.5px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -1115,15 +1133,15 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .fits li:last-child { border-bottom: 0; }
 .fit-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 5px; }
 .fit-lab { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; }
-.fit-why { margin: 0 0 6px; font-size: 12px; line-height: 1.45; color: var(--ink-2); }
+.fit-why { margin: 0 0 6px; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); }
 .fit-foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.evidence { font-size: 10.5px; color: var(--faint); }
+.evidence { font-size: 11px; color: var(--faint); }
 
 .source {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11.5px;
+  font-size: 12.5px;
   color: var(--muted);
   padding-top: 4px;
   word-break: break-all;
@@ -1134,7 +1152,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 
 .muted { color: var(--muted); }
 .faint { color: var(--faint); }
-.sm { font-size: 11.5px; }
+.sm { font-size: 12.5px; }
 .hi { color: var(--p500); }
 
 /* ═══════════════════════════════════════════════════════════════ responsive */
@@ -1162,7 +1180,11 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   .brand { padding-bottom: 12px; }
   .nav { flex-direction: row; overflow-x: auto; gap: 4px; }
   .nav-item { flex: none; }
-  .nav-count, .sidebar-foot { display: none; }
+  .nav-count { display: none; }
+  /* The sidebar collapses on a phone but this line does not get to collapse with it: the
+     page carries TUM Venture Labs’ name and their accent colours, and the statement that
+     it is unaffiliated is the reason that is acceptable. */
+  .sidebar-foot { margin: 10px 0 0; padding-top: 10px; font-size: 11px; }
   .topbar { padding: 12px 16px; flex-wrap: wrap; }
   .search { width: 100%; }
   .content { padding: 16px 16px 48px; }
@@ -1198,7 +1220,7 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
     margin-top: 18px;
     padding-top: 10px;
     border-top: 1px solid #ccc;
-    font-size: 9.5px;
+    font-size: 11px;
     line-height: 1.5;
     color: #555;
     max-width: 90ch;
@@ -1232,3 +1254,115 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
    Warming it on hover ties the row to the record it opens. */
 .row:hover .tile { background: var(--p100); border-color: var(--p200); }
 .cand:hover .tile { background: #fff; }
+
+/* Alliance co-membership. Deliberately neither the blue of a confirmed relationship nor the
+   amber of an unverified one: it is a different kind of fact, not a weaker version of the
+   same one, and a reader should not be able to mistake it for either. */
+.labtag.alliance,
+.pill.alliance,
+.conf.alliance {
+  background: #F2F0FA;
+  border-color: #D9D2F0;
+  color: #5B3FA8;
+}
+
+/* ═══════════════════════════════════════════════════════════════ colophon */
+
+.colophon-body { padding: 14px 16px 16px; max-width: 58ch; }
+
+.colophon-body p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.colophon-body p strong { font-weight: 600; color: var(--ink); }
+
+.colophon-body h3 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 9px;
+}
+
+.week-one { margin: 0 0 16px; padding-left: 20px; }
+.week-one li {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.week-one li::marker { color: var(--p300); font-variant-numeric: tabular-nums; }
+
+.colophon-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule-soft);
+}
+.colophon-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-sm);
+  font-size: 12.5px;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.colophon-links a:hover { border-color: var(--p300); background: var(--p50); color: var(--p700); }
+
+/* ═══════════════════════════════════════════════════════════════ kpi hierarchy
+
+   Four identical cards assert that four facts matter equally, which is the default a
+   dashboard falls into when nobody decides. One of these is the finding and the other three
+   are the scope it sits in, so the finding gets the wide track and the large numeral and the
+   rest step down to a supporting size. */
+
+.kpis { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
+
+.kpis .kpi:first-child .kpi-value { font-size: 40px; letter-spacing: -0.028em; }
+.kpis .kpi:not(:first-child) .kpi-value { font-size: 22px; }
+.kpis .kpi:first-child .kpi-label { font-size: 14px; }
+
+@media (max-width: 1180px) {
+  .kpis { grid-template-columns: repeat(auto-fit, minmax(184px, 1fr)); }
+  .kpis .kpi:first-child .kpi-value { font-size: 22px; }
+  .kpis .kpi:first-child .kpi-label { font-size: 12.5px; }
+}
+
+/* Method has three counts of equal standing, so it keeps the even row. */
+.content .kpis:has(.kpi:nth-child(3):last-child) { grid-template-columns: repeat(3, 1fr); }
+.content .kpis:has(.kpi:nth-child(3):last-child) .kpi:first-child .kpi-value { font-size: 22px; }
+.content .kpis:has(.kpi:nth-child(3):last-child) .kpi:first-child .kpi-label { font-size: 12.5px; }
+
+/* An amber dot on 68 of 80 rows is not a warning, it is the background. The exceptional
+   state here is the row a person actually signed off, so that is the one that gets a mark. */
+.rows .marker:not(.reviewed) .dotmark { display: none; }
+.rows .marker:not(.reviewed) { color: var(--faint); }
+
+/* ═══════════════════════════════════════════════════════════════ matrix encoding
+
+   Hue is out of the cells and lives on the column head instead.
+
+   The legend teaches fill against outline: solid is a relationship that exists, hollow is a
+   lab that should have one. But every mark was also drawn in its lab's colour, and hue varies
+   far more loudly than fill does, so the encoding the legend explained was the one you could
+   not see. Twelve hues across seven hundred and eighty cells read as texture, not as meaning,
+   and the column position already says which lab a mark belongs to, so the colour was
+   repeating what the grid had said and drowning out what it had not.
+
+   It also removed a real accessibility failure. Built Environment's yellow measures 1.24:1
+   against white, so that column simply did not render; keeping hue only where it sits on a
+   3px rule under a label makes that survivable without altering anybody's brand colour. */
+
+.labhead-text { border-bottom: 3px solid var(--lab, var(--p300)); }
+
+/* Light lab colours need an edge to register at this size. A hairline ring costs nothing on
+   the dark accents and rescues the yellows, rather than changing the hex anyone published. */
+.cov-dot, .assoc-dot, .tip-dot { box-shadow: inset 0 0 0 1px rgba(13, 13, 13, 0.24); }
+.lab-stripe { box-shadow: inset 0 -1px 0 rgba(13, 13, 13, 0.18); }

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { labById } from '../data/labs'
 import {
+  candidateCount,
+  fold,
   monogram,
-  opportunityCount,
   partnersRanked,
   sponsorStatus,
   sponsorStatusLabel,
@@ -12,10 +13,10 @@ import { IconOpen } from '../components/Icons'
 import type { PartnerType } from '../types'
 
 type TypeFilter = 'all' | PartnerType
-type StatusFilter = 'all' | 'engaged' | 'indicative' | 'unattributed'
+type StatusFilter = 'all' | 'engaged' | 'indicative' | 'alliance' | 'unattributed'
 
 const typeOptions: TypeFilter[] = ['all', 'corporate', 'foundation', 'public_body', 'ecosystem']
-const statusOptions: StatusFilter[] = ['all', 'engaged', 'indicative', 'unattributed']
+const statusOptions: StatusFilter[] = ['all', 'engaged', 'indicative', 'alliance', 'unattributed']
 
 export default function Sponsors({
   query,
@@ -29,15 +30,15 @@ export default function Sponsors({
   const [type, setType] = useState<TypeFilter>('all')
   const [status, setStatus] = useState<StatusFilter>('all')
 
-  const q = query.trim().toLowerCase()
+  const q = fold(query.trim())
   const rows = partnersRanked.filter((p) => {
     if (type !== 'all' && p.type !== type) return false
     if (status !== 'all' && sponsorStatus(p) !== status) return false
     if (!q) return true
     return (
-      p.name.toLowerCase().includes(q) ||
-      p.sectors.some((s) => s.toLowerCase().includes(q)) ||
-      p.currentLabs.some((a) => labById[a.labId].name.toLowerCase().includes(q))
+      fold(p.name).includes(q) ||
+      p.sectors.some((s) => fold(s).includes(q)) ||
+      p.currentLabs.some((a) => fold(labById[a.labId].name).includes(q))
     )
   })
 
@@ -89,7 +90,7 @@ export default function Sponsors({
       <div className="rows">
         {rows.map((p) => {
           const st = sponsorStatus(p)
-          const untapped = opportunityCount(p)
+          const untapped = candidateCount(p)
           return (
             <button className="row" key={p.id} onClick={() => onOpenPartner(p.id)}>
               <span className="cell-name">
@@ -141,8 +142,9 @@ export default function Sponsors({
       )}
 
       <p className="tablefoot">
-        {rows.length} of {partnersRanked.length} sponsors. Untapped counts labs where this
-        sponsor is a strong candidate but has no visible relationship.
+        {rows.length} of {partnersRanked.length} sponsors. Untapped counts every lab where this
+        sponsor is a strong candidate and has no visible relationship. Cross-lab lists the subset
+        of those where another lab already holds the relationship and could introduce them.
       </p>
     </>
   )

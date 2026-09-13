@@ -5,6 +5,13 @@ const prefersReducedMotion = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
 
 /**
+ * A backgrounded tab does not run requestAnimationFrame, so the count never advanced and the
+ * figure sat at zero. Nobody watching sees it, but a screenshot, a print, or a link preview
+ * rendered off-screen captured a page of zeros where the headline numbers should be.
+ */
+const renderedOffscreen = () => typeof document !== 'undefined' && document.hidden
+
+/**
  * Counts a figure up to its value on mount.
  *
  * The point is not decoration. These four numbers are the first thing on the page and the
@@ -16,11 +23,13 @@ const prefersReducedMotion = () =>
  * not a degraded one: nothing is lost, because the number was always the content.
  */
 export default function CountUp({ value, duration = 620 }: { value: number; duration?: number }) {
-  const [shown, setShown] = useState(() => (prefersReducedMotion() ? value : 0))
+  const [shown, setShown] = useState(() =>
+    prefersReducedMotion() || renderedOffscreen() ? value : 0,
+  )
   const frame = useRef<number>()
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
+    if (prefersReducedMotion() || renderedOffscreen()) {
       setShown(value)
       return
     }

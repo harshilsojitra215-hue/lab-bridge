@@ -229,7 +229,12 @@ export const labs: Lab[] = [
   },
   {
     id: 'sw-heilbronn',
-    color: '#A50184',
+    // Deviation, and the only one: TUM Venture Labs give both Software & AI labs the same
+    // magenta. On a grid whose whole argument is that a sponsor in one lab is an opening in
+    // another, two labs sharing a colour makes the Munich to Heilbronn hop invisible, and
+    // that hop is one of the findings here. Munich keeps their magenta; Heilbronn is given a
+    // violet that reads apart from it at 15 pixels.
+    color: '#6D28D9',
     name: 'Software & AI / Heilbronn',
     short: 'Software & AI Heilbronn',
     url: 'https://www.tum-venture-labs.de/labs/software-ai-heilbronn/',

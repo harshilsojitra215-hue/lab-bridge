@@ -1,4 +1,5 @@
 import CountUp from '../components/CountUp'
+import { IconExternal } from '../components/Icons'
 import { labById } from '../data/labs'
 import { labCoverage, monogram, opportunities, totals } from '../derive'
 import type { ViewId } from '../App'
@@ -49,17 +50,21 @@ export default function Overview({
         </p>
       </section>
 
+      {/*
+        The finding leads. Sponsors mapped is the scope this was done at, not the result, and
+        putting it first made the opening row read as four facts of equal standing.
+      */}
       <div className="kpis">
+        <Kpi
+          value={totals.partnersWithOpportunity}
+          label="Sponsors with an untapped lab"
+          note="A strong fit for a lab that has not approached them"
+          accent
+        />
         <Kpi
           value={totals.partners}
           label="Sponsors mapped"
           note="Every one links to the page it was found on"
-        />
-        <Kpi
-          value={totals.partnersWithOpportunity}
-          label="Could be introduced"
-          note="A strong fit for a lab that has not approached them"
-          accent
         />
         <Kpi
           value={opportunities.length}
@@ -69,7 +74,7 @@ export default function Overview({
         <Kpi
           value={totals.inferredAssociations}
           label="Unconfirmed associations"
-          note={`of ${totals.confirmedAssociations + totals.inferredAssociations}, read from page context rather than a partner list`}
+          note={`of ${totals.confirmedAssociations + totals.inferredAssociations} lab associations, read from page context rather than a partner list`}
           warn
         />
       </div>
@@ -152,6 +157,63 @@ export default function Overview({
               </span>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/*
+        The artefact had no author on it. Everything above could be read, believed and closed
+        with no route back to the person who made it, which is a strange thing for a job
+        application to do. Deliberately last, deliberately short, and no email address: the
+        CV already carries one and a public page does not need to.
+      */}
+      <section className="panel colophon">
+        <div className="panel-head">
+          <div className="panel-title">
+            <h2>Who built this, and why</h2>
+            <span className="panel-sub">
+              An independent prototype, not a request from anyone at TUM Venture Labs.
+            </span>
+          </div>
+        </div>
+
+        <div className="colophon-body">
+          <p>
+            <strong>Harshil Sojitra</strong>, second year BSc Management and Data Science, TUM
+            Campus Heilbronn. I applied for the Working Student role in Business Development and
+            Operations, then built this rather than send a second email about it. The posting
+            asks for a contact management system for sponsors and prospects, for the interfaces
+            between labs, and for structured sponsor workflows using AI tools. This is what those
+            three look like from outside, with only public pages to work from.
+          </p>
+
+          <h3>What I would do in the first week with the real data</h3>
+          <ol className="week-one">
+            <li>
+              Replace confirmed and inferred with what a CRM actually holds: owner, stage, last
+              contact, renewal date. Every honesty caveat on this site exists because those four
+              fields are missing.
+            </li>
+            <li>
+              Run collision detection, which public data cannot support at all: two labs
+              approaching one sponsor in the same quarter without knowing it.
+            </li>
+            <li>
+              Work the queue with the lab leads and record what the reasoning got wrong, because
+              the error taxonomy is the part that makes the second hundred assessments faster
+              than the first.
+            </li>
+          </ol>
+
+          <div className="colophon-links">
+            <a href="https://www.linkedin.com/in/harshil-sojitra-81846b282" target="_blank" rel="noreferrer">
+              <IconExternal />
+              LinkedIn
+            </a>
+            <a href="https://github.com/harshilsojitra215-hue/lab-bridge" target="_blank" rel="noreferrer">
+              <IconExternal />
+              Source and method
+            </a>
+          </div>
         </div>
       </section>
     </>

@@ -630,7 +630,7 @@ export const fits: Fit[] = [
 
 
   // ---------------------------------------------------------------- SAP
-  { partnerId: 'sap', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'sap', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'Defence programmes run on ERP and supply chain systems, which is SAP’s product, and SAP is named a founding partner of the security and defence alliance.',
     evidence: ['Partner sectors: ERP, supply chain software', 'Lab technologies: defence technology'] },
   { partnerId: 'sap', labId: 'sw-munich', status: 'strong_candidate', reviewed: false, audited: true,
@@ -650,7 +650,7 @@ export const fits: Fit[] = [
     evidence: ['Partner sectors: business AI, enterprise software', 'Lab technologies: applied AI for industry, machine learning'] },
 
   // ---------------------------------------------------------------- Airbus Defence and Space
-  { partnerId: 'airbus-ds', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'airbus-ds', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'Airbus Defence and Space builds military aircraft and satellites, which is this lab’s industry.',
     evidence: ['Partner sectors: military aircraft, satellites and space systems', 'Lab technologies: satellite technology, defence technology'] },
   { partnerId: 'airbus-ds', labId: 'climate', status: 'strong_candidate', reviewed: false, audited: true,
@@ -667,7 +667,7 @@ export const fits: Fit[] = [
     evidence: ['Partner sectors: secure communications', 'Lab technologies: photonics, quantum sensing'] },
 
   // ---------------------------------------------------------------- MTU Aero Engines
-  { partnerId: 'mtu-aero-engines', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'mtu-aero-engines', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'MTU builds and services aircraft engines, which is this lab’s aviation industry.',
     evidence: ['Partner sectors: aircraft engines, engine maintenance and overhaul', 'Lab technologies: aviation'] },
   { partnerId: 'mtu-aero-engines', labId: 'additive', status: 'strong_candidate', reviewed: false, audited: true,
@@ -681,7 +681,7 @@ export const fits: Fit[] = [
     evidence: ['Partner sectors: aircraft engines, turbine components', 'Lab technologies: sustainable fuels'] },
 
   // ---------------------------------------------------------------- Diehl Defence
-  { partnerId: 'diehl-defence', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'diehl-defence', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'Diehl Defence makes guided missiles and air defence systems, which is this lab’s defence field.',
     evidence: ['Partner sectors: guided missiles, air defence systems', 'Lab technologies: defence technology'] },
   { partnerId: 'diehl-defence', labId: 'chembio', status: 'possible', reviewed: false, audited: false,
@@ -692,7 +692,7 @@ export const fits: Fit[] = [
     evidence: ['Partner sectors: defence electronics, guided missiles', 'Lab technologies: autonomous systems'] },
 
   // ---------------------------------------------------------------- Helsing
-  { partnerId: 'helsing', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'helsing', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'Helsing builds defence AI and autonomous aerial systems, which is this lab’s field.',
     evidence: ['Partner sectors: defence artificial intelligence, autonomous systems', 'Lab technologies: defence technology, autonomous systems'] },
   { partnerId: 'helsing', labId: 'sw-munich', status: 'strong_candidate', reviewed: false, audited: true,
@@ -703,7 +703,7 @@ export const fits: Fit[] = [
     evidence: ['Partner sectors: sensor fusion, autonomous systems', 'Lab technologies: robotics, autonomous systems'] },
 
   // ---------------------------------------------------------------- Isar Aerospace
-  { partnerId: 'isar-aerospace', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'isar-aerospace', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'Isar Aerospace builds a small satellite launch vehicle, which is the launch services this lab names first.',
     evidence: ['Partner sectors: launch vehicles, small satellite launch', 'Lab technologies: launch services'] },
   { partnerId: 'isar-aerospace', labId: 'additive', status: 'strong_candidate', reviewed: false, audited: true,
@@ -714,7 +714,7 @@ export const fits: Fit[] = [
     evidence: ['Partner sectors: composite structures, rocket propulsion', 'Lab technologies: analytical sciences'] },
 
   // ---------------------------------------------------------------- Quantum Systems
-  { partnerId: 'quantum-systems', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'quantum-systems', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'Quantum Systems builds unmanned aerial vehicles, which is this lab’s aviation and defence field.',
     evidence: ['Partner sectors: unmanned aerial systems, electric VTOL drones', 'Lab technologies: urban air mobility, defence technology'] },
   { partnerId: 'quantum-systems', labId: 'robotics', status: 'strong_candidate', reviewed: false, audited: true,
@@ -731,7 +731,7 @@ export const fits: Fit[] = [
     evidence: ['Partner sectors: sensor payloads, AI-based aerial reconnaissance', 'Lab technologies: precision agriculture'] },
 
   // ---------------------------------------------------------------- University of the Bundeswehr Munich
-  { partnerId: 'unibw-munich', labId: 'aerospace', status: 'existing', reviewed: false, audited: true,
+  { partnerId: 'unibw-munich', labId: 'aerospace', status: 'strong_candidate', reviewed: false, audited: true,
     reasoning: 'UniBw Munich runs aerospace engineering and defence research, which is this lab’s field.',
     evidence: ['Partner sectors: defence research, aerospace engineering', 'Lab technologies: defence technology, aviation'] },
   { partnerId: 'unibw-munich', labId: 'sw-munich', status: 'strong_candidate', reviewed: false, audited: true,

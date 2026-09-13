@@ -1,5 +1,5 @@
 import { outsideTheMap } from '../data/labs'
-import { labCoverage, monogram } from '../derive'
+import { fold, labCoverage, monogram } from '../derive'
 import { IconExternal } from '../components/Icons'
 
 export default function Labs({
@@ -9,13 +9,13 @@ export default function Labs({
   query: string
   onOpenPartner: (id: string) => void
 }) {
-  const q = query.trim().toLowerCase()
+  const q = fold(query.trim())
   const rows = labCoverage.filter((c) => {
     if (!q) return true
     return (
-      c.lab.name.toLowerCase().includes(q) ||
-      c.lab.technologies.some((t) => t.toLowerCase().includes(q)) ||
-      c.lab.domain.toLowerCase().includes(q)
+      fold(c.lab.name).includes(q) ||
+      c.lab.technologies.some((t) => fold(t).includes(q)) ||
+      fold(c.lab.domain).includes(q)
     )
   })
 

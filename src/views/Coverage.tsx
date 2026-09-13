@@ -12,9 +12,10 @@ interface TipState {
 }
 
 /**
- * The whole map in one grid. Solid means a relationship exists, hollow in the same lab
- * colour means an untapped strong fit. Reading across a row, solid against hollow is the
- * finding.
+ * The whole map in one grid. Solid means a relationship exists, the same mark hollow means an
+ * untapped strong fit. Reading across a row, solid against hollow is the finding. Every mark is
+ * drawn in one ink: the column already says which lab, so hue in the cell repeated that and
+ * buried the fill-against-outline distinction the reader is actually meant to see.
  */
 export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string) => void }) {
   const [onlyOpportunities, setOnlyOpportunities] = useState(false)
@@ -47,7 +48,7 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
                 Sponsor
               </th>
               {labs.map((l) => (
-                <th key={l.id} scope="col" className="labhead">
+                <th key={l.id} scope="col" className="labhead" style={{ ['--lab' as string]: l.color }}>
                   <div className="labhead-inner">
                     <span className="labhead-text" title={l.domain}>
                       {l.short}
@@ -145,8 +146,8 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
               </span>
             </div>
             <p className="cov-side-note">
-              Each mark is drawn in its own lab colour. The count beside a sponsor is
-              relationships · openings.
+              Colour identifies the lab on the column head only, so fill and outline carry the
+              state. The count beside a sponsor is relationships · openings.
             </p>
           </div>
         </aside>
@@ -155,6 +156,12 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
       {tip && <Tip tip={tip} />}
     </>
   )
+}
+
+const CONF_NOTE: Record<string, string> = {
+  confirmed: ' · confirmed listing',
+  inferred: ' · inferred from page context',
+  alliance: ' · TUM-level alliance, not a lab relationship',
 }
 
 function Tip({ tip }: { tip: TipState }) {
@@ -172,7 +179,7 @@ function Tip({ tip }: { tip: TipState }) {
       <p>{tip.fit.reasoning || statusLabel[tip.fit.status]}</p>
       <div className="tip-meta">
         {statusLabel[tip.fit.status]}
-        {assoc && (assoc.confidence === 'confirmed' ? ' · confirmed listing' : ' · inferred')}
+        {assoc && CONF_NOTE[assoc.confidence]}
       </div>
     </div>
   )

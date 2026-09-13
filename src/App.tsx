@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   IconCrossLab,
   IconMark,
@@ -61,8 +61,25 @@ export default function App() {
   const [query, setQuery] = useState('')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
+  /**
+   * Whether this session was the thing that opened the drawer.
+   *
+   * Closing used to call history.back() whenever history.length was above one, which reads as
+   * a safe guard and is not: history.length counts the whole tab, not the entries this app
+   * created. Open the site on a deep link, as anyone following a link in an email does, and
+   * the first entry behind the drawer is wherever they came from. Clicking the close button
+   * then left the site. Only a drawer this session pushed is safe to pop.
+   */
+  const pushedDrawer = useRef(false)
+
   useEffect(() => {
-    const onHash = () => setRoute(parseHash())
+    const onHash = () => {
+      const next = parseHash()
+      // Navigating away from a record by any route, including the back button, means the
+      // entry this session pushed is gone and must not be popped again.
+      if (!next.partner) pushedDrawer.current = false
+      setRoute(next)
+    }
     window.addEventListener('hashchange', onHash)
     return () => window.removeEventListener('hashchange', onHash)
   }, [])
@@ -76,13 +93,17 @@ export default function App() {
   }
 
   const setOpenPartner = (id: string) => {
+    pushedDrawer.current = true
     window.location.hash = `#/${view}/${id}`
   }
 
-  // A drawer opened from a row is a history entry, so going back is the natural way to close it.
   const closePartner = () => {
-    if (window.history.length > 1) window.history.back()
-    else window.location.hash = `#/${view}`
+    if (pushedDrawer.current) {
+      pushedDrawer.current = false
+      window.history.back()
+    } else {
+      window.location.hash = `#/${view}`
+    }
   }
 
   const title = useMemo(() => nav.find((n) => n.id === view)!.label, [view])

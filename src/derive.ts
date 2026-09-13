@@ -97,6 +97,29 @@ export const totals = {
     (n, p) => n + p.currentLabs.filter((a) => a.confidence === 'inferred').length,
     0,
   ),
+  /**
+   * Companies whose only link is a TUM-level alliance that TUM Venture Labs belongs to as a
+   * peer. They are not in the cross-lab queue, and that is not an oversight: the queue names
+   * the lab that would make the introduction, and for these there is no such lab. They are
+   * still strong candidates, visible as hollow marks on the grid and in the untapped column.
+   */
+  allianceAssociations: partners.reduce(
+    (n, p) => n + p.currentLabs.filter((a) => a.confidence === 'alliance').length,
+    0,
+  ),
+}
+
+
+/**
+ * Strip diacritics before comparing. Two of the sponsors carry them, Dassault Systèmes and
+ * High-Tech Gründerfonds, and without folding neither is reachable from an English keyboard:
+ * "Systemes" returned nothing at all.
+ */
+export function fold(s: string): string {
+  return s
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
 }
 
 export const statusLabel: Record<FitStatus, string> = {
@@ -115,23 +138,27 @@ export const typeLabel: Record<Partner['type'], string> = {
 
 /* ------------------------------------------------------------------ ERP helpers */
 
-export type SponsorStatus = 'engaged' | 'indicative' | 'unattributed'
+export type SponsorStatus = 'engaged' | 'indicative' | 'alliance' | 'unattributed'
 
 /**
  * The status a sponsor-relations team would actually triage on.
  *
  * engaged:      named in a partner or sponsor section of at least one lab page
  * indicative:   only appears in looser page context (event, venue, programme mention)
+ * alliance:     shares a TUM-level alliance with TUM Venture Labs and nothing more
  * unattributed: listed at organisation level with no lab named at all
  */
 export function sponsorStatus(p: Partner): SponsorStatus {
   if (p.currentLabs.length === 0) return 'unattributed'
-  return p.currentLabs.some((a) => a.confidence === 'confirmed') ? 'engaged' : 'indicative'
+  if (p.currentLabs.some((a) => a.confidence === 'confirmed')) return 'engaged'
+  if (p.currentLabs.some((a) => a.confidence === 'inferred')) return 'indicative'
+  return 'alliance'
 }
 
 export const sponsorStatusLabel: Record<SponsorStatus, string> = {
   engaged: 'Engaged',
   indicative: 'Indicative',
+  alliance: 'Alliance only',
   unattributed: 'No lab named',
 }
 
@@ -145,7 +172,16 @@ export function monogram(name: string): string {
 }
 
 export const labCoverage = labs.map((lab) => {
-  const engaged = partners.filter((p) => p.currentLabs.some((a) => a.labId === lab.id))
+  /**
+   * Alliance co-membership is not engagement. Fourteen companies are named as founding
+   * partners of the TUM Security and Defense Alliance in a sentence that names TUM Venture
+   * Labs alongside them rather than above them. Counting those as Aerospace relationships put
+   * that lab at sixteen engaged, roughly double every other lab, off a list it belongs to as
+   * a peer. They are counted here as what they are: openings with a documented way in.
+   */
+  const engaged = partners.filter((p) =>
+    p.currentLabs.some((a) => a.labId === lab.id && a.confidence !== 'alliance'),
+  )
   const candidates = opportunities.filter((o) => o.fit.labId === lab.id)
   return {
     lab,

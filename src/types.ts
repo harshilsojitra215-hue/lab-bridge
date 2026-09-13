@@ -34,8 +34,14 @@ export interface LabAssociation {
    * confirmed: the partner appears in a named Partners / Sponsors section on that lab's page.
    * inferred:  the partner appears on the page in some other context (event sponsor, venue,
    *             programme mention) and the association is our read, not their statement.
+   * alliance:  the partner and TUM Venture Labs are both named in the same TUM-level alliance.
+   *             That is co-membership, not a lab relationship, and it is kept out of every
+   *             engagement count. The founding-partner list of the TUM Security and Defense
+   *             Alliance names TUM Venture Labs alongside the companies, not above them, so
+   *             reading those names as sponsors of the Aerospace lab would invent a
+   *             relationship out of a peer listing. They are openings, not relationships.
    */
-  confidence: 'confirmed' | 'inferred'
+  confidence: 'confirmed' | 'inferred' | 'alliance'
   /** Exactly how it appeared on the page. Shown verbatim in the interface. */
   context: string
 }

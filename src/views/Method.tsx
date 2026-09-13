@@ -6,7 +6,7 @@ import { totals } from '../derive'
  */
 const pipeline = [
   { n: 1, step: 'Collect', detail: 'Partners read off tum-venture-labs.de and the twelve lab pages', count: `${totals.partners} sponsors` },
-  { n: 2, step: 'Attribute', detail: 'Each link marked confirmed or inferred against the page it came from', count: `${totals.confirmedAssociations} confirmed` },
+  { n: 2, step: 'Attribute', detail: 'Each link marked confirmed, inferred or alliance against the page it came from', count: `${totals.confirmedAssociations} confirmed` },
   { n: 3, step: 'Score', detail: 'Every sponsor assessed against all twelve labs by model', count: `${totals.scored} pairs` },
   { n: 4, step: 'Audit', detail: 'Second adversarial pass strips fabricated and generic reasoning', count: `${totals.audited} checked` },
   { n: 5, step: 'Sign off', detail: 'A person reads the sentence and accepts it', count: `${totals.reviewed} signed` },
@@ -17,6 +17,7 @@ const limits = [
   ['No euro values', 'There is no public basis for a sponsorship figure, so none is shown.'],
   ['Organisations only', 'No names, no contacts, nothing behind a login. Correct under GDPR and the right answer if asked.'],
   ['Some logos unread', 'A few homepage and Heilbronn logos could not be identified. They are left out rather than guessed.'],
+  ['Alliances are not relationships', 'Fourteen companies are named as founding partners of the TUM Security and Defense Alliance in a sentence that names TUM Venture Labs alongside them, not above them. That is co-membership. Those are openings here, never engagements.'],
 ]
 
 export default function Method() {

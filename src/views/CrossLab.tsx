@@ -1,5 +1,5 @@
 import { labById } from '../data/labs'
-import { monogram, opportunities } from '../derive'
+import { fold, monogram, opportunities } from '../derive'
 import ReviewMarker from '../components/ReviewMarker'
 import { IconOpen } from '../components/Icons'
 
@@ -10,13 +10,13 @@ export default function CrossLab({
   query: string
   onOpenPartner: (id: string) => void
 }) {
-  const q = query.trim().toLowerCase()
+  const q = fold(query.trim())
   const rows = opportunities.filter((o) => {
     if (!q) return true
     return (
-      o.partner.name.toLowerCase().includes(q) ||
-      labById[o.fit.labId].name.toLowerCase().includes(q) ||
-      o.introducers.some((l) => labById[l].name.toLowerCase().includes(q))
+      fold(o.partner.name).includes(q) ||
+      fold(labById[o.fit.labId].name).includes(q) ||
+      o.introducers.some((l) => fold(labById[l].name).includes(q))
     )
   })
 

@@ -54,7 +54,7 @@ for (const p of partners) {
     if (!labIds.has(a.labId)) errors.push(`${p.id}: unknown labId ${a.labId}`)
     if (seenAssoc.has(a.labId)) errors.push(`${p.id}: duplicate association with ${a.labId}`)
     seenAssoc.add(a.labId)
-    if (a.confidence !== 'confirmed' && a.confidence !== 'inferred') {
+    if (!['confirmed', 'inferred', 'alliance'].includes(a.confidence)) {
       errors.push(`${p.id}: association with ${a.labId} has no confidence value`)
     }
     if (!a.context) errors.push(`${p.id}: association with ${a.labId} has no context`)
@@ -138,7 +138,16 @@ for (const p of partners) {
   for (const a of p.currentLabs) {
     const f = fits.find((x) => x.partnerId === p.id && x.labId === a.labId)
     if (!f) errors.push(`${p.id} says it works with ${a.labId} but there is no fit row for it`)
-    else if (f.status !== 'existing') {
+    else if (a.confidence === 'alliance') {
+      /* Alliance co-membership is the one association kind that must NOT read as a
+         relationship. If one of these ever becomes `existing` it puts a solid mark on the
+         matrix for a company that shares a list with TUM Venture Labs and nothing more. */
+      if (f.status === 'existing') {
+        errors.push(
+          `${p.id}/${a.labId}: alliance co-membership is marked as an existing relationship`,
+        )
+      }
+    } else if (f.status !== 'existing') {
       errors.push(`${p.id}/${a.labId}: partner record says the relationship exists, fit says ${f.status}`)
     }
   }

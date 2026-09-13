@@ -17,7 +17,10 @@ import type { Partner } from '../types'
  *
  * confidence: 'confirmed' means the organisation appears in a named Partners or Sponsors
  * section on that lab's page. 'inferred' means it appears in some other page context and
- * the association is our read, not their statement.
+ * the association is our read, not their statement. 'alliance' means the only thing linking
+ * them is a TUM-level alliance whose own founding-partner sentence names TUM Venture Labs
+ * alongside them rather than above them, which is co-membership and not a lab relationship;
+ * those are kept out of every engagement count and surface as openings instead.
  */
 export const partners: Partner[] = [
   // ---------- corporates ----------
@@ -692,7 +695,7 @@ export const partners: Partner[] = [
       'German enterprise software group whose ERP, supply chain, procurement and analytics products run the operational backbone of large industrial companies.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
   {
@@ -704,7 +707,7 @@ export const partners: Partner[] = [
       'The defence and space division of Airbus, building military aircraft, satellites, Earth observation systems, secure communications and unmanned systems.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
   {
@@ -716,7 +719,7 @@ export const partners: Partner[] = [
       'Munich aero engine manufacturer developing and servicing commercial and military engine modules, including additively manufactured turbine components.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
   {
@@ -728,7 +731,7 @@ export const partners: Partner[] = [
       'German defence manufacturer producing guided missiles, air defence systems, ammunition and defence electronics.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
   {
@@ -740,7 +743,7 @@ export const partners: Partner[] = [
       'European defence technology company building AI software for sensor fusion, electronic warfare and autonomous aerial and underwater systems.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
   {
@@ -752,7 +755,7 @@ export const partners: Partner[] = [
       'Munich launch company developing the Spectrum small satellite launch vehicle, with in-house engine production using additive manufacturing.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
   {
@@ -764,7 +767,7 @@ export const partners: Partner[] = [
       'Bavarian manufacturer of electric vertical take-off unmanned aerial systems with onboard AI for reconnaissance and mapping.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
   {
@@ -776,7 +779,7 @@ export const partners: Partner[] = [
       'Federal armed forces university in Neubiberg with research programmes in cybersecurity, aerospace, mobility and digitalisation.',
     sourceUrl: 'https://www.tum-venture-labs.de/labs/aerospace-defense/expanding-aerospace-defense/',
     currentLabs: [
-      { labId: 'aerospace', confidence: 'inferred', context: 'named as a founding partner of the TUM Security and Defense Alliance' },
+      { labId: 'aerospace', confidence: 'alliance', context: 'founding partner of the TUM Security and Defense Alliance, a list that names TUM Venture Labs as a partner too' },
     ],
   },
 
