@@ -1,5 +1,7 @@
 # Lab Bridge
 
+**Live: [harshilsojitra215-hue.github.io/lab-bridge](https://harshilsojitra215-hue.github.io/lab-bridge/)**
+
 A cross-lab sponsor map for TUM Venture Labs.
 
 Twelve domain-specific labs each develop their own sponsors. Sponsors are not domain
@@ -128,7 +130,12 @@ Two more, which exist because the honesty claims on the page have to be enforced
 npm run validate     # data integrity, and every evidence citation checked against the record
 npm run queue        # the opportunity queue in ranked order, for reading before signing off
 npm run review       # what still needs a person; with arguments, signs one row off
+npm run deploy       # validate, build, publish the live site
 ```
+
+`deploy` exists because nothing republishes on its own. The live site is a build, so signing
+off a batch of assessments and stopping there leaves the page claiming nobody has reviewed
+anything while the repository says otherwise.
 
 ---
 
