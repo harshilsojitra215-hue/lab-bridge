@@ -86,7 +86,7 @@ for (const f of fits) {
    */
   const circular = /which is (this lab|what this lab|where this lab|half of this lab)|this lab['’]s (field|subject|sector|domain|remit|cohort|pipeline|deal flow|research base|formation stage|stated (purpose|industry))/i
   if (f.reasoning && circular.test(f.reasoning)) {
-    warnings.push(`${key} [${f.status}]: reasoning names nothing concrete on the lab side`)
+    warnings.push(`${key} [${f.status}]: reasoning ends on a self-referential lab clause — check it names something`)
   }
   if (!Array.isArray(f.evidence) || f.evidence.length === 0) errors.push(`${key}: no evidence`)
   if (typeof f.reviewed !== 'boolean') errors.push(`${key}: reviewed must be a boolean`)
