@@ -29,24 +29,26 @@ export default function Overview({
   return (
     <>
       {/*
-        The argument, before the numbers. Someone arriving from a link has no idea what this is
-        for, and a dashboard that opens on four figures and a table asks them to work it out.
-        The numbers only mean something once the gap they measure has been named.
+        The argument, in one line, before anything else.
+
+        This used to be two grey paragraphs, eighty-two words, sitting on the white page above
+        four counters. It said the right thing and nobody was going to read it: someone opening
+        a link wants to see what the thing is, not be briefed. The claim is the same, it is now
+        a sentence instead of an essay, and it is the only place on the site that shouts.
       */}
-      <section className="thesis">
-        <p className="thesis-lede">
-          Twelve labs each develop their own sponsors. Sponsors are not domain specific. A company
-          one lab has already won is often a warm relationship for three others, and no lab can
-          see that from where it sits.
+      <section className="hero">
+        <p className="hero-line">
+          Twelve labs build their sponsors separately.
+          <br />
+          <em>Sponsors do not work that way.</em>
         </p>
-        <p className="thesis-sub">
-          Lab Bridge maps every publicly listed partner against all twelve labs and names the lab
-          that could make each introduction. It is built only from their public pages, which
-          limits what it can claim.{' '}
-          <button className="link inline" onClick={() => onGo('method')}>
-            how it works, and what it cannot tell you
+        <p className="hero-sub">
+          A company one lab has already won is often an open door for another.
+          <br />
+          {totals.partners} partners against all {totals.labs} labs, from public pages only.{' '}
+          <button className="link inline hero-link" onClick={() => onGo('method')}>
+            What it cannot tell you
           </button>
-          .
         </p>
       </section>
 
@@ -84,8 +86,7 @@ export default function Overview({
           <div className="panel-title">
             <h2>Priority introductions</h2>
             <span className="panel-sub">
-              The strongest opening per sponsor. The left tag is the lab that already holds the
-              relationship. The right tag is the lab that could be introduced.
+              Left tag holds the relationship. Right tag could be introduced.
             </span>
           </div>
           <button className="link" onClick={() => onGo('crosslab')}>
@@ -126,8 +127,7 @@ export default function Overview({
           <div className="panel-title">
             <h2>Lab coverage</h2>
             <span className="panel-sub">
-              How many sponsors each lab already works with, against how many it could reach
-              through another lab.
+              Sponsors each lab works with, against those it could reach through another.
             </span>
           </div>
           <button className="link" onClick={() => onGo('labs')}>

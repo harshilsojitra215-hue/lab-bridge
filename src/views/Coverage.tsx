@@ -26,11 +26,9 @@ export default function Coverage({ onOpenPartner }: { onOpenPartner: (id: string
   return (
     <>
       <p className="lede">
-        All {partnersRanked.length} sponsors against all twelve labs. Read across a row: a solid
-        mark is a relationship that exists, the same mark hollow is a lab that should have one
-        and does not. Solid next to hollow is the finding, and the reason to read sponsors across
-        labs rather than inside one. Hover any mark for the reasoning. Select a row for the full
-        record.
+        Read across a row. <strong>Solid</strong> is a relationship that exists,{' '}
+        <strong>hollow</strong> is a lab that should have one and does not. Solid next to hollow
+        is the finding. Hover any mark for the reasoning.
       </p>
 
       {/*

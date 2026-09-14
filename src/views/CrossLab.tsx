@@ -23,8 +23,8 @@ export default function CrossLab({
   return (
     <>
       <p className="lede">
-        Ranked by how many labs already work with the sponsor. A company working with three
-        labs is a warmer introduction than one working with one.
+        Ranked by how many labs already work with the sponsor. Three is a warmer introduction
+        than one.
       </p>
 
       <div className="table-head crosslab" role="row">

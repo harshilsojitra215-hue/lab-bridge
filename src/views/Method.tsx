@@ -24,10 +24,8 @@ export default function Method() {
   return (
     <>
       <p className="lede">
-        How the map was built, and what it is not. Everything here comes from pages TUM Venture
-        Labs publish themselves, which sets a hard ceiling on what it can claim. A public logo
-        proves a relationship exists somewhere. It does not say which lab owns it, how deep it
-        goes, or whether it is still active. Start with the limits.
+        How the map was built, and what it cannot claim. A public logo proves a relationship
+        exists somewhere, not which lab owns it. Start with the limits.
       </p>
 
       <div className="kpis">

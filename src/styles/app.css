@@ -334,32 +334,51 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
 .lede { margin: 0 0 20px; max-width: 58ch; font-size: 14px; color: var(--muted); line-height: 1.55; }
 .lede strong { color: var(--ink-2); font-weight: 600; }
 
-/* ═══════════════════════════════════════════════════════════════ thesis */
+/* ═══════════════════════════════════════════════════════════════ hero
 
-/* The opening argument. Set wider and quieter than a heading, closer to a standfirst than a
-   hero: it has to be read, not announced. The rule on the left carries the accent so the
-   block reads as the page speaking rather than as another card of data. */
-.thesis {
-  margin-bottom: 32px;
-  padding-left: 16px;
-  border-left: 3px solid var(--p500);
+   The one place on the site that raises its voice.
+
+   Everything else is a tool and behaves like one. This is the first three seconds, and it has
+   to land the argument before a reader decides whether to keep going, so it gets the navy, the
+   size and the only italic in the stylesheet. It is still one sentence: the shouting is in the
+   typography, not in the word count. */
+
+.hero {
+  margin: -22px -28px 24px;
+  padding: 40px 28px 34px;
+  background: var(--p800);
+  color: #fff;
+  text-align: center;
+  animation: hero-in 420ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
 }
 
-.thesis-lede {
-  margin: 0 0 8px;
-  max-width: 58ch;
-  font-size: 17px;
-  line-height: 1.5;
-  color: var(--ink);
-  letter-spacing: -0.006em;
+@keyframes hero-in {
+  from { transform: translateY(10px); }
+  to   { transform: none; }
 }
 
-.thesis-sub {
-  margin: 0;
-  max-width: 58ch;
+.hero-line {
+  margin: 0 auto 12px;
+  max-width: 22ch;
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+}
+
+/* The turn in the argument, and the only italic anywhere. */
+.hero-line em {
+  font-style: italic;
+  color: var(--p300);
+}
+
+.hero-sub {
+  margin: 0 auto;
+  max-width: 62ch;
   font-size: 12.5px;
-  line-height: 1.55;
-  color: var(--muted);
+  line-height: 1.6;
+  color: var(--p200);
 }
 
 .link.inline {
@@ -370,6 +389,14 @@ h1, h2, h3 { font-family: var(--display); font-weight: 600; margin: 0; letter-sp
   text-decoration-color: var(--p200);
 }
 .link.inline:hover { text-decoration-color: var(--p500); }
+
+.hero-link { color: #fff; text-decoration-color: var(--p400); white-space: nowrap; }
+.hero-link:hover { text-decoration-color: #fff; }
+
+@media (max-width: 860px) {
+  .hero { margin: -16px -16px 18px; padding: 28px 18px 24px; }
+  .hero-line { font-size: 23px; }
+}
 
 /* ═══════════════════════════════════════════════════════════════ kpis */
 

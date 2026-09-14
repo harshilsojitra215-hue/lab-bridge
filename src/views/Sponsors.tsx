@@ -45,9 +45,7 @@ export default function Sponsors({
   return (
     <>
       <p className="lede">
-        Every organisation found on their public pages: what it does, which labs name it, and
-        whether that naming is a partner listing or a looser mention. <strong>Untapped</strong>{' '}
-        counts the labs where this sponsor is a strong fit but has no visible relationship.
+        <strong>Untapped</strong> counts labs where a sponsor fits and has no relationship yet.
         Select any row for the full record and the page it came from.
       </p>
 
@@ -142,9 +140,8 @@ export default function Sponsors({
       )}
 
       <p className="tablefoot">
-        {rows.length} of {partnersRanked.length} sponsors. Untapped counts every lab where this
-        sponsor is a strong candidate and has no visible relationship. Cross-lab lists the subset
-        of those where another lab already holds the relationship and could introduce them.
+        {rows.length} of {partnersRanked.length} sponsors. Cross-lab lists the subset where
+        another lab already holds the relationship and could introduce them.
       </p>
     </>
   )
